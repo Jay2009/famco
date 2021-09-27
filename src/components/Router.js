@@ -4,8 +4,8 @@ import Auth from "../routes/Auth";
 import Home from "../routes/Home";
 
 
-const AppRouther = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+const AppRouther = ({isLoggedIn}) => {
+    
     return(
         <Router>
             <Switch>
