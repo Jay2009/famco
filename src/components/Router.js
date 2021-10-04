@@ -6,7 +6,7 @@ import Navigation from "components/Navigation";
 import Profile from "routes/Profile";
 
 
-const AppRouther = ({isLoggedIn}) => {
+const AppRouther = ({isLoggedIn, userObj}) => {
     
     return(
         <Router>
@@ -15,7 +15,7 @@ const AppRouther = ({isLoggedIn}) => {
                 {isLoggedIn ? (
                 <>
                     <Route exact path="/">
-                        <Home />
+                        <Home userObj={userObj} />
                     </Route>
                     <Route exact path="/profile">
                         <Profile />

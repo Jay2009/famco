@@ -1,40 +1,47 @@
+import Famco from "components/Famcomsg";
 import { dbService } from "fbase";
 import { addDoc, collection, getDocs, query, onSnapshot, orderBy } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 
-const Home = () => {
+const Home = ({userObj}) => {
+
     const [NewFamcoMsg, setNewFamcoMsg] = useState("");
     const [NewFamcoMsges, setNewFamcoMsges] = useState([]);
     const getNewFamcoMsges = async() => {
-        const DbNewFamcoMsges = query(collection(dbService,"NewFamcoMsges"));
-        const querySnapshot = await getDocs(DbNewFamcoMsges);
-        querySnapshot.forEach((doc) => {
-            const newFamcoMsgObj = {
-                ...doc.date(),
-                id: doc.id,
-            }
-            setNewFamcoMsges(prev => [newFamcoMsgObj, ...prev]);
-        });
-    };
+    const DbNewFamcoMsges = query(collection(dbService,"NewFamcoMsg"));
+    const querySnapshot = await getDocs(DbNewFamcoMsges);
+    querySnapshot.forEach((doc) => {
+        const newFamcoMsgObj = {
+            ...doc.data(),
+            id: doc.id,
+                
+        }
+        setNewFamcoMsges((prev) => [newFamcoMsgObj, ...prev]);
+    });
+};
+
     useEffect (() => {
+        
         const q = query(
-            collection(dbService, "nweets"),
+            collection(dbService, "NewFamcoMsg"),
             orderBy("createdAt", "desc")
             );
             onSnapshot(q, (snapshot) => {
-            const nweetArr = snapshot.docs.map((doc) => ({
+            const famcoArr = snapshot.docs.map((doc) => ({
             id: doc.id,
             ...doc.data(),
             }));
-            setNewFamcoMsges(nweetArr);
+            setNewFamcoMsges(famcoArr);
             });
             }, []);
+
     const onSubmit = async(event) => {       
         event.preventDefault();
         try {
             const docRef = await addDoc(collection(dbService, "NewFamcoMsg"), {
-                NewFamcoMsg,
+                text: NewFamcoMsg,
                 createdAt: Date.now(),
+                creatorId: userObj.uid,
             });
             console.log("Document written with ID: ", docRef.id);
             } catch (error) {
@@ -47,8 +54,9 @@ const Home = () => {
         setNewFamcoMsg(value);
         };
 
-
+        
     return (
+        
     <div>
         <form onSubmit ={onSubmit}>
             <input 
@@ -64,10 +72,13 @@ const Home = () => {
             />
         </form>
         <div>
+            
             {NewFamcoMsges.map((NewFamcoMsg) => (
-                <div key={NewFamcoMsg.id}>
-                    <h4>{NewFamcoMsg.NewFamcoMsg}</h4>
-                </div>
+                <Famco 
+                key={NewFamcoMsg.id} 
+                NewFamcoMsg={NewFamcoMsg} 
+                isOwner={NewFamcoMsg.creatorId === userObj.uid}
+                />
             ))}
         </div>
     </div>
