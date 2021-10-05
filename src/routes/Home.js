@@ -76,7 +76,7 @@ const Home = ({userObj}) => {
             {NewFamcoMsges.map((NewFamcoMsg) => (
                 <Famco 
                 key={NewFamcoMsg.id} 
-                NewFamcoMsg={NewFamcoMsg} 
+                FamcoMsgObj={NewFamcoMsg} 
                 isOwner={NewFamcoMsg.creatorId === userObj.uid}
                 />
             ))}

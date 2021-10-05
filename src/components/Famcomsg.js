@@ -1,15 +1,64 @@
-import React from "react";
+import { dbService } from "fbase";
+import { doc, deleteDoc, updateDoc } from "firebase/firestore";
+import React, { useState } from "react";
 
-const Famco = ({NewFamcoMsg, isOwner}) => (
-    <div>
-        <h4>{NewFamcoMsg.text}</h4>
-        {isOwner && ( 
-        <>
-        <button>Delete Famco message</button>
-        <button>Edit Famco message</button>
-        </>
-        )}
-    </div>
-);
+const Famco = ({FamcoMsgObj, isOwner}) => {
+    const [editing, setEditing] = useState(false);
+    const [NewFamcoMsg, setNewFamcoMsg] = useState(FamcoMsgObj.text);
+    
+    const famcoTextRef =doc(dbService, "NewFamcoMsg", `${FamcoMsgObj.id}`) ;
+    const onDeleteClick = async () => {
+        const ok= window.confirm("Are you sure you want to delete the famco message?");
+        
+        if(ok){
+            await deleteDoc(famcoTextRef);
+            console.log(FamcoMsgObj);
+        }
+    };
+    const toggleEditing = () => setEditing((prev) => !prev);
+    const onSubmit = async (event) => {
+        event.preventDefault();
+        await updateDoc(famcoTextRef, {
+            text: NewFamcoMsg,
+        });
+        setEditing(false);
+    };
+    const onChange = (event) => {
+        const {
+            target: {value},
+        } = event;
+        setNewFamcoMsg(value);
+    };
+    return(
+        <div>
+            {editing ? ( 
+                <>
+                <form onSubmit={onSubmit}> 
+                    <input 
+                    type="text" 
+                    placeholder="Edit your Famco message" 
+                    value={NewFamcoMsg} 
+                    required 
+                    onChange={onChange}
+                    />
+                    <input type="submit" value="Update Famco" />
+                </form>
+                <button onClick={toggleEditing}>Cancel</button>
+                </>
+                ) : ( 
+                <>
+                <h4>{FamcoMsgObj.text}</h4>
+                {isOwner && ( 
+                    <>
+                    <button onClick={onDeleteClick}> Delete Famco</button>
+                    <button onClick={toggleEditing}> Edit Famco</button>
+                    </>
+                )}
+            </>
+                )}
+        </div>
+    );
+};
+
 
 export default Famco;
