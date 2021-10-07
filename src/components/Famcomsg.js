@@ -1,4 +1,6 @@
 import { dbService } from "fbase";
+import { deleteObject, ref } from "@firebase/storage";
+import { storageService } from "../fbase";
 import { doc, deleteDoc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
 
@@ -13,6 +15,7 @@ const Famco = ({FamcoMsgObj, isOwner}) => {
         if(ok){
             await deleteDoc(famcoTextRef);
             console.log(FamcoMsgObj);
+            await deleteObject(ref(storageService, FamcoMsgObj.attachmentUrl));
         }
     };
     const toggleEditing = () => setEditing((prev) => !prev);
@@ -48,6 +51,9 @@ const Famco = ({FamcoMsgObj, isOwner}) => {
                 ) : ( 
                 <>
                 <h4>{FamcoMsgObj.text}</h4>
+                {FamcoMsgObj.attachmentUrl && (
+                    <img src={FamcoMsgObj.attachmentUrl} width="50px"/>
+                )}
                 {isOwner && ( 
                     <>
                     <button onClick={onDeleteClick}> Delete Famco</button>
