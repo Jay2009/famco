@@ -55,6 +55,7 @@ return (
         placeholder="Email" 
         value={email}
         onChange={onChange}
+        required
         />
         <input 
         name="password"
@@ -62,6 +63,7 @@ return (
         placeholder="Password" 
         value={password}
         onChange={onChange}
+        required
         />
         <input type="submit" value={newAccount ? "Create Account" : "Log In"} 
         />

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AppRouther from "components/Router";
 import {authService} from "fbase";
+import { updateProfile } from "@firebase/auth";
 
 
 
