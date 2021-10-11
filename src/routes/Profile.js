@@ -4,9 +4,10 @@ import { authService } from "fbase";
 import { useHistory } from "react-router";
 import { collection, getDocs, query, where } from "@firebase/firestore";
 import { updateProfile } from "@firebase/auth";
+import { safeGet } from "@firebase/util";
 
 
-export default ({userObj}) => {
+export default ({refreshUser,userObj}) => {
     const history = useHistory();
     const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
     const onLogOutClick = () =>{
@@ -30,27 +31,45 @@ export default ({userObj}) => {
         const {
             target: { value },
         } = event;
-        setNewDisplayName(value);
+        setNewDisplayName(value.trim());
     };
 
     const onSubmit = async(event) => {
+        if(newDisplayName.length > 2){
         event.preventDefault();
-        if (userObj.displayName !== newDisplayName) {
-            await updateProfile(userObj, { displayName: newDisplayName });
-        }
+        if (userObj.displayName !== newDisplayName)  {
+            await updateProfile(await authService.currentUser, {
+                displayName: newDisplayName
+        });
+    }
+        
+        refreshUser(newDisplayName);
+        
+    } else{
+        alert("Name should be more than 2 chracters");
+    }
+        
     };
-
+    
     return (
+        
         <>
-            <form onSubmit={onSubmit}>
+            <form onSubmit={onSubmit} >
+            
+                <>
                 <input 
                 onChange={onChange} 
                 type="text" 
-                placeholder="Display name" 
+                placeholder="What is your name?" 
                 value={newDisplayName}
+                required
                 />
-                <input type="submit" value="Update" />
-            </form>    
+                
+                    <input type="submit" value="Update name" />
+                    </>
+                
+                
+            </form>   
         <button onClick={onLogOutClick}>Log Out</button>
         </>
     );

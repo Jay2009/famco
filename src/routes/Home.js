@@ -86,13 +86,17 @@ const Home = ({userObj}) => {
     return (
         
     <div>
+        
         <form onSubmit ={onSubmit}>
+            {userObj.displayName ? (
+                <>
             <input 
             value={NewFamcoMsg} 
             onChange= {onChange} 
             type="text" 
             placeholder="What's in your mind?" 
             maxLength={120} 
+            required
             />
             <input
             type="file" 
@@ -103,6 +107,10 @@ const Home = ({userObj}) => {
             type="submit" 
             value="Post" 
             />
+            </>
+            ):(
+                <>Please change your name on the profile to start</>
+            )}
             {attachment && (
             <div>
                 <img 

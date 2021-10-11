@@ -7,23 +7,41 @@ import { updateProfile } from "@firebase/auth";
 
 function App() {
   const [init, setInit] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  //const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userObj, setUserObj] = useState(null);
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
       if(user) {
-        setIsLoggedIn(true);
-        setUserObj(user);
-      } else {
-        setIsLoggedIn(false);
-      }
+        // setIsLoggedIn(true);
+        setUserObj({
+          displayName: user.displayName,
+          uid: user.uid,
+          updateProfile: (args) => user.updateProfile(args),
+        });
+        
+        } else {
+          setUserObj(null);
+        }
       setInit(true);
-      console.log(user)});
-  }, [])
+      console.log(user,"hello");
+    });
+  }, []);
+  const refreshUser = () => {
+    const user = authService.currentUser;
+      setUserObj({
+      displayName: user.displayName,
+      uid: user.uid,
+      updateProfile: (args) => user.updateProfile(args),
+    });
+  };
+  
   //console.log(authService.currentUser);
   return (
     <>
-    {init ? <AppRouther isLoggedIn={isLoggedIn} userObj={userObj}/> : "Initializing..."}
+    {init ? <AppRouther
+      refreshUser={refreshUser} 
+      isLoggedIn={Boolean(userObj)} 
+      userObj={userObj}/> : "Initializing..."}
       <footer>&copy; {new Date().getFullYear()} Famco</footer>
     </>
   );
