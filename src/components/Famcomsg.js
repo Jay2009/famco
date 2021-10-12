@@ -4,11 +4,11 @@ import { storageService } from "../fbase";
 import { doc, deleteDoc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
 
-const Famco = ({FamcoMsgObj, isOwner}) => {
+const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
     const [editing, setEditing] = useState(false);
     const [NewFamcoMsg, setNewFamcoMsg] = useState(FamcoMsgObj.text);
-    
-    const famcoTextRef =doc(dbService, "NewFamcoMsg", `${FamcoMsgObj.id}`) ;
+    const famcoTextRef = doc(dbService, "NewFamcoMsg", `${FamcoMsgObj.id}`) ;
+    const UserInfo = doc(dbService, "UserInfo", `${FamcoMsgObj.id}`);
     const onDeleteClick = async () => {
         const ok= window.confirm("Are you sure you want to delete the famco message?");
         
@@ -25,13 +25,16 @@ const Famco = ({FamcoMsgObj, isOwner}) => {
             text: NewFamcoMsg,
         });
         setEditing(false);
+        
     };
     const onChange = (event) => {
         const {
             target: {value},
         } = event;
         setNewFamcoMsg(value);
+        console.log(FamcoMsgObj);
     };
+    
     return(
         <div>
             {editing ? ( 
@@ -45,6 +48,7 @@ const Famco = ({FamcoMsgObj, isOwner}) => {
                     onChange={onChange}
                     />
                     <input type="submit" value="Update Famco" />
+                    
                 </form>
                 <button onClick={toggleEditing}>Cancel</button>
                 </>
@@ -53,7 +57,7 @@ const Famco = ({FamcoMsgObj, isOwner}) => {
                 <h4>{FamcoMsgObj.text}</h4>
                 {FamcoMsgObj.attachmentUrl && (
                     <img src={FamcoMsgObj.attachmentUrl} width="50px"/>
-                )}
+                )} <h5>{FamcoMsgObj.name}</h5>
                 {isOwner && ( 
                     <>
                     <button onClick={onDeleteClick}> Delete Famco</button>

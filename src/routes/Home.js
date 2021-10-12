@@ -1,12 +1,12 @@
 import Famco from "components/Famcomsg";
 import {v4 as uuidv4} from "uuid";
 import { dbService, storageService } from "fbase";
-import { addDoc, collection, getDocs, query, onSnapshot, orderBy } from "@firebase/firestore";
+import { addDoc, collection, getDocs, query, onSnapshot, orderBy, doc } from "@firebase/firestore";
 import {ref, uploadString, getDownloadURL} from "@firebase/storage";
 import React, { useEffect, useState } from "react";
 
 const Home = ({userObj}) => {
-
+    console.log(addDoc,"documenttttttttttt");
     const [NewFamcoMsg, setNewFamcoMsg] = useState("");
     const [NewFamcoMsges, setNewFamcoMsges] = useState([]);
     const [attachment, setAttachment] = useState("");
@@ -19,8 +19,10 @@ const Home = ({userObj}) => {
             id: doc.id,
                 
         }
+        
         setNewFamcoMsges((prev) => [newFamcoMsgObj, ...prev]);
     });
+    
 };
 
     useEffect (() => {
@@ -50,6 +52,7 @@ const Home = ({userObj}) => {
             text: NewFamcoMsg,
             createdAt: Date.now(),
             creatorId: userObj.uid,
+            name:userObj.displayName,
             attachmentUrl
         };
         try {
@@ -125,9 +128,11 @@ const Home = ({userObj}) => {
         <div>         
             {NewFamcoMsges.map((NewFamcoMsg) => (
                 <Famco 
+
                 key={NewFamcoMsg.id} 
                 FamcoMsgObj={NewFamcoMsg} 
                 isOwner={NewFamcoMsg.creatorId === userObj.uid}
+                userObj={userObj}
                 />
             ))}
         </div>

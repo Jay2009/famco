@@ -25,8 +25,10 @@ const Auth = () => {
             let data;
         if(newAccount){
             data = await createUserWithEmailAndPassword(authService, email, password) ;
+            //add document with email adress
         } else {
             data = await signInWithEmailAndPassword(authService, email, password);
+            
         } 
         console.log(data);
     }   catch (error) {

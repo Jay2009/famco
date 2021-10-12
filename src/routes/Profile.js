@@ -1,8 +1,10 @@
 /* eslint-disable import/no-anonymous-default-export */
 import React, { useState } from "react";
+import { dbService } from "fbase";
+import { doc, deleteDoc, updateDoc,addDoc } from "firebase/firestore";
 import { authService } from "fbase";
 import { useHistory } from "react-router";
-import { collection, getDocs, query, where } from "@firebase/firestore";
+import { collection, getDocs, query, where} from "@firebase/firestore";
 import { updateProfile } from "@firebase/auth";
 import { safeGet } from "@firebase/util";
 
@@ -10,6 +12,7 @@ import { safeGet } from "@firebase/util";
 export default ({refreshUser,userObj}) => {
     const history = useHistory();
     const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
+   // const UserInfo = doc(dbService, "UserInfo", `${UserInfoObj.id}`);
     const onLogOutClick = () =>{
         authService.signOut();
         history.push("/");
@@ -37,9 +40,21 @@ export default ({refreshUser,userObj}) => {
     const onSubmit = async(event) => {
         if(newDisplayName.length > 2){
         event.preventDefault();
+        
         if (userObj.displayName !== newDisplayName)  {
+            const newUserInfo = {
+                name:userObj.displayName,
+                creatorId:userObj.uid
+            };
+            try {
+                const docRef = await addDoc(collection(dbService, "UserInfo"),newUserInfo);
+                console.log("Document written with ID: ", docRef.id);
+                } catch (error) {
+                console.error("Error adding document: ", error);
+                }
             await updateProfile(await authService.currentUser, {
-                displayName: newDisplayName
+                displayName: newDisplayName,
+                
         });
     }
         
