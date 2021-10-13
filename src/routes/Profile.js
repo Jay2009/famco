@@ -9,7 +9,7 @@ import { updateProfile } from "@firebase/auth";
 import { safeGet } from "@firebase/util";
 
 
-export default ({refreshUser,userObj}) => {
+export default ({refreshUser,userObj,userInfo}) => {
     const history = useHistory();
     const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
    // const UserInfo = doc(dbService, "UserInfo", `${UserInfoObj.id}`);
@@ -38,24 +38,41 @@ export default ({refreshUser,userObj}) => {
     };
 
     const onSubmit = async(event) => {
-        if(newDisplayName.length > 2){
         event.preventDefault();
+        if(newDisplayName.length > 2){
         
+        
+    let duplication = false;
+        //if (){}
+        //console.log(userObj.uid);
+        const q = query(
+            collection(dbService, "UserInfo"),
+            where("creatorId", "==", userObj.uid)
+            );
+            const querySnapshot = await getDocs(q);
+            // if(doc.id){
+            // console.log(querySnapshot, "lengthhhhhhhhh");
+            // } 
+        querySnapshot.forEach((doc) => {
+        console.log(doc.data());
+        duplication = true;
+    });
+        console.log(duplication);
+        if(duplication === true){
+        console.log("문서 id를 자동으로 찾아서 updateDoc 으로 수정");
+        }else{
+            console.log("addDoc 으로 새로 추가");
+        }
+
+        
+    
+
         if (userObj.displayName !== newDisplayName)  {
-            const newUserInfo = {
-                name:userObj.displayName,
-                creatorId:userObj.uid
-            };
-            try {
-                const docRef = await addDoc(collection(dbService, "UserInfo"),newUserInfo);
-                console.log("Document written with ID: ", docRef.id);
-                } catch (error) {
-                console.error("Error adding document: ", error);
-                }
+                //update if there is doc id == current userid   
             await updateProfile(await authService.currentUser, {
                 displayName: newDisplayName,
-                
         });
+        
     }
         
         refreshUser(newDisplayName);
@@ -69,13 +86,13 @@ export default ({refreshUser,userObj}) => {
     return (
         
         <>
-            <form onSubmit={onSubmit} >
+            <form onSubmit={onSubmit}>
             
                 <>
                 <input 
                 onChange={onChange} 
                 type="text" 
-                placeholder="What is your name?" 
+                placeholder="Write your user name" 
                 value={newDisplayName}
                 required
                 />

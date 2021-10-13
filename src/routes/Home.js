@@ -5,8 +5,7 @@ import { addDoc, collection, getDocs, query, onSnapshot, orderBy, doc } from "@f
 import {ref, uploadString, getDownloadURL} from "@firebase/storage";
 import React, { useEffect, useState } from "react";
 
-const Home = ({userObj}) => {
-    console.log(addDoc,"documenttttttttttt");
+const Home = ({userObj,userInfo}) => {
     const [NewFamcoMsg, setNewFamcoMsg] = useState("");
     const [NewFamcoMsges, setNewFamcoMsges] = useState([]);
     const [attachment, setAttachment] = useState("");
@@ -19,6 +18,7 @@ const Home = ({userObj}) => {
             id: doc.id,
                 
         }
+        
         
         setNewFamcoMsges((prev) => [newFamcoMsgObj, ...prev]);
     });
@@ -133,6 +133,7 @@ const Home = ({userObj}) => {
                 FamcoMsgObj={NewFamcoMsg} 
                 isOwner={NewFamcoMsg.creatorId === userObj.uid}
                 userObj={userObj}
+                userInfo={userInfo}
                 />
             ))}
         </div>

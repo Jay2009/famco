@@ -8,13 +8,12 @@ const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
     const [editing, setEditing] = useState(false);
     const [NewFamcoMsg, setNewFamcoMsg] = useState(FamcoMsgObj.text);
     const famcoTextRef = doc(dbService, "NewFamcoMsg", `${FamcoMsgObj.id}`) ;
-    const UserInfo = doc(dbService, "UserInfo", `${FamcoMsgObj.id}`);
+    
     const onDeleteClick = async () => {
         const ok= window.confirm("Are you sure you want to delete the famco message?");
         
         if(ok){
             await deleteDoc(famcoTextRef);
-            console.log(FamcoMsgObj);
             await deleteObject(ref(storageService, FamcoMsgObj.attachmentUrl));
         }
     };
@@ -32,7 +31,7 @@ const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
             target: {value},
         } = event;
         setNewFamcoMsg(value);
-        console.log(FamcoMsgObj);
+        
     };
     
     return(
@@ -57,7 +56,12 @@ const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
                 <h4>{FamcoMsgObj.text}</h4>
                 {FamcoMsgObj.attachmentUrl && (
                     <img src={FamcoMsgObj.attachmentUrl} width="50px"/>
-                )} <h5>{FamcoMsgObj.name}</h5>
+                )} 
+                {isOwner ? 
+                    (<h5>{userObj.displayName}</h5>
+                        ) : (
+                        <h5>{FamcoMsgObj.name}</h5>)
+                }
                 {isOwner && ( 
                     <>
                     <button onClick={onDeleteClick}> Delete Famco</button>

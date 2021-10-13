@@ -1,9 +1,11 @@
 import { authService } from "fbase";
 import React, { useState } from "react";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { addDoc, collection, getDocs, query, onSnapshot, orderBy, doc } from "@firebase/firestore";
+import { dbService } from "fbase";
 
 
-const Auth = () => {    
+const Auth = ({userObj}) => {    
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [newAccount, setNewAccount] = useState(true);
@@ -17,7 +19,7 @@ const Auth = () => {
         }else if (name === "password") {
             setPassword(value);
         }
-        console.log(event.target.name);
+        
     };
     const onSubmit = async(event) => {
         event.preventDefault();
@@ -25,7 +27,6 @@ const Auth = () => {
             let data;
         if(newAccount){
             data = await createUserWithEmailAndPassword(authService, email, password) ;
-            //add document with email adress
         } else {
             data = await signInWithEmailAndPassword(authService, email, password);
             
