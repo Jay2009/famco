@@ -12,11 +12,43 @@ import { safeGet } from "@firebase/util";
 export default ({refreshUser,userObj,userInfo}) => {
     const history = useHistory();
     const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
+    let duplication = false;
    // const UserInfo = doc(dbService, "UserInfo", `${UserInfoObj.id}`);
     const onLogOutClick = () =>{
         authService.signOut();
         history.push("/");
     };
+
+
+
+    authService.onAuthStateChanged(async(user) => {
+        console.log(duplication);
+        const userinfoObj = {
+            creatorId: user.uid,
+            name: user.email
+            };
+        if(duplication === true){
+        console.log("문서 id를 자동으로 찾아서 updateDoc 으로 수정");
+        const userInfoRef = doc(dbService, "UserInfo", `${userinfoObj}`) ;
+        await updateDoc(userInfoRef, {
+            name: user.email,
+        });
+        //etEditing(false);
+        }else{
+
+            console.log("addDoc 으로 새로 추가");
+            
+            //console.log(newUserInfo.name, "this is user id");
+            try {
+                const docRef = await addDoc(collection(dbService, "UserInfo"),userinfoObj);
+                console.log("Document written with ID: ", docRef.id);
+                } catch (error) {
+                console.error("Error adding document: ", error);
+                }
+                //setUserInfo(userinfoObj);
+                console.log(user,"hello");
+        }
+    });
     /*const getMyFamcoMsges = async() => {
         const q = query(
             collection(dbService, "NewFamcoMsg"),
@@ -40,9 +72,9 @@ export default ({refreshUser,userObj,userInfo}) => {
     const onSubmit = async(event) => {
         event.preventDefault();
         if(newDisplayName.length > 2){
-        
-        
-    let duplication = false;
+
+
+    
         //if (){}
         //console.log(userObj.uid);
         const q = query(
@@ -52,56 +84,51 @@ export default ({refreshUser,userObj,userInfo}) => {
             const querySnapshot = await getDocs(q);
             // if(doc.id){
             // console.log(querySnapshot, "lengthhhhhhhhh");
-            // } 
+            // }
         querySnapshot.forEach((doc) => {
         console.log(doc.data());
         duplication = true;
     });
-        console.log(duplication);
-        if(duplication === true){
-        console.log("문서 id를 자동으로 찾아서 updateDoc 으로 수정");
-        }else{
-            console.log("addDoc 으로 새로 추가");
-        }
-
-        
     
 
+
+
+
         if (userObj.displayName !== newDisplayName)  {
-                //update if there is doc id == current userid   
+                //update if there is doc id == current userid
             await updateProfile(await authService.currentUser, {
                 displayName: newDisplayName,
         });
-        
+
     }
-        
+
         refreshUser(newDisplayName);
-        
+
     } else{
         alert("Name should be more than 2 chracters");
     }
-        
+
     };
-    
+
     return (
-        
+
         <>
             <form onSubmit={onSubmit}>
-            
+
                 <>
-                <input 
-                onChange={onChange} 
-                type="text" 
-                placeholder="Write your user name" 
+                <input
+                onChange={onChange}
+                type="text"
+                placeholder="Write your user name"
                 value={newDisplayName}
                 required
                 />
-                
+
                     <input type="submit" value="Update name" />
                     </>
-                
-                
-            </form>   
+
+
+            </form>
         <button onClick={onLogOutClick}>Log Out</button>
         </>
     );

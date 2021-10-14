@@ -32,6 +32,7 @@ const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
         } = event;
         setNewFamcoMsg(value);
         
+        
     };
     
     return(

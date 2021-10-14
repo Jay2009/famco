@@ -16,19 +16,7 @@ function App() {
     authService.onAuthStateChanged(async(user) => {
       if(user) {
         // setIsLoggedIn(true);
-        const userinfoObj = {
-          creatorId: user.uid,
-          name: user.email
-        };
-      //console.log(newUserInfo.name, "this is user id");
-      try {
-          const docRef = await addDoc(collection(dbService, "UserInfo"),userinfoObj);
-          console.log("Document written with ID: ", docRef.id);
-          } catch (error) {
-          console.error("Error adding document: ", error);
-          }
-          setUserInfo(userinfoObj);
-          console.log(user,"hello");
+        
 
         setUserObj({
           displayName: user.displayName,
@@ -39,7 +27,7 @@ function App() {
         
         } else {
           setUserObj(null);
-          setUserInfo(null);
+          
         }
       setInit(true);
       

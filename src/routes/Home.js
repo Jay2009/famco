@@ -112,7 +112,7 @@ const Home = ({userObj,userInfo}) => {
             />
             </>
             ):(
-                <>Please change your name on the profile to start</>
+                <>Add infomation on your profile to start</>
             )}
             {attachment && (
             <div>
