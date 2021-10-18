@@ -8,7 +8,6 @@ const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
     const [editing, setEditing] = useState(false);
     const [NewFamcoMsg, setNewFamcoMsg] = useState(FamcoMsgObj.text);
     const famcoTextRef = doc(dbService, "NewFamcoMsg", `${FamcoMsgObj.id}`) ;
-    
     const onDeleteClick = async () => {
         const ok= window.confirm("Are you sure you want to delete the famco message?");
         
@@ -31,7 +30,7 @@ const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
             target: {value},
         } = event;
         setNewFamcoMsg(value);
-        
+        console.log(FamcoMsgObj);
         
     };
     
