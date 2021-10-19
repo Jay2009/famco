@@ -25,7 +25,7 @@ const Home = ({userObj,userInfo}) => {
     
 };
 
-
+    
     useEffect (() => {
         
         const q = query(
@@ -53,7 +53,7 @@ const Home = ({userObj,userInfo}) => {
             text: NewFamcoMsg,
             createdAt: Date.now(),
             creatorId: userObj.uid,
-            name:userObj.displayName,
+            name: userObj.displayName,
             attachmentUrl
         };
         try {
