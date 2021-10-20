@@ -1,7 +1,7 @@
 import Famco from "components/Famcomsg";
 import {v4 as uuidv4} from "uuid";
 import { dbService, storageService } from "fbase";
-import { addDoc, collection, getDocs, query, onSnapshot, orderBy, doc } from "@firebase/firestore";
+import { addDoc, collection, getDocs, query, onSnapshot, orderBy, doc, where } from "@firebase/firestore";
 import {ref, uploadString, getDownloadURL} from "@firebase/storage";
 import React, { useEffect, useState } from "react";
 
@@ -9,6 +9,7 @@ const Home = ({userObj,userInfo}) => {
     const [NewFamcoMsg, setNewFamcoMsg] = useState("");
     const [NewFamcoMsges, setNewFamcoMsges] = useState([]);
     const [attachment, setAttachment] = useState("");
+    const [isUserInfoExist, SetUserInfoExist] = useState(false);
     const getNewFamcoMsges = async() => {
     const DbNewFamcoMsges = query(collection(dbService,"NewFamcoMsg"));
     const querySnapshot = await getDocs(DbNewFamcoMsges);
@@ -18,16 +19,32 @@ const Home = ({userObj,userInfo}) => {
             id: doc.id,
                 
         }
-        
+            
         
         setNewFamcoMsges((prev) => [newFamcoMsgObj, ...prev]);
     });
     
 };
+    const checkUserInfo = async() =>{
+        
+        const q = query(
+            collection(dbService, "UserInfo"),
+            where("creatorId", "==", userObj.uid)
+            );
+            const getDocument = await getDocs(q);
+            getDocument.forEach((isUserInfoExist) => {
+                //console.log(document.id, " doc id ");
+                console.log(getDocument.id,"there is doucment");
+                SetUserInfoExist(true);
+                console.log(isUserInfoExist, " There is data !! on the databasessssssssssssss ");
+                // toggle
+            });
+}
 
+//console.log(userObj.uid, " There is no data on the database ");
     
     useEffect (() => {
-        
+        checkUserInfo();
         const q = query(
             collection(dbService, "NewFamcoMsg"),
             orderBy("createdAt", "desc")
@@ -38,6 +55,7 @@ const Home = ({userObj,userInfo}) => {
             ...doc.data(),
             }));
             setNewFamcoMsges(famcoArr);
+            
             });
             }, []);
 
@@ -87,12 +105,13 @@ const Home = ({userObj,userInfo}) => {
         reader.readAsDataURL(theFile);
     };
     const onClearAttachment = () => setAttachment(null);
+    
     return (
         
     <div>
         
         <form onSubmit ={onSubmit}>
-            {userObj.displayName ? (
+            {isUserInfoExist ? ( 
                 <>
             <input 
             value={NewFamcoMsg} 

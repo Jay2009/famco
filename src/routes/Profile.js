@@ -81,11 +81,11 @@ export default ({refreshUser,userObj,userInfo,FamcoMsgObj}) => {
                     } catch (error) {
                     console.error("Error adding document: ", error);
                 }
-            }else{alert(" nickname is already in use.");
+            }else{ alert(" nickname is already in use.");
             setNewDisplayName("");
         }
         }
-        }else{ console.log(" 구글 어카운트 로그인이 아닙니다.");}
+        }
     }
     
     
@@ -136,7 +136,6 @@ export default ({refreshUser,userObj,userInfo,FamcoMsgObj}) => {
             target: { value },
         } = event;
         setNewDisplayName(value.trim());
-        
     };
     
     const onSubmit = async(event) => {
@@ -161,11 +160,18 @@ export default ({refreshUser,userObj,userInfo,FamcoMsgObj}) => {
                                     } catch (error) {
                                     console.error("Error adding document: ", error);
                                     }
+                                    await updateProfile(await authService.currentUser, {
+                                        displayName: newDisplayName,
+                                    });
                         }else{
                             alert("Nick name is already in use");
                             setNewDisplayName("");
                         }
                     }else{
+                        console.log(isNicknameExist,"before duplicain");
+                        await duplicationForNickname();
+                        console.log(isNicknameExist,"after duplicain");
+                        if(isNicknameExist === false){
                         const q = query(
                             collection(dbService, "UserInfo"),
                             where("creatorId", "==", userObj.uid)
@@ -177,11 +183,15 @@ export default ({refreshUser,userObj,userInfo,FamcoMsgObj}) => {
                                 name: newDisplayName,
                                 });
                             });
-                        
+                            await updateProfile(await authService.currentUser, {
+                                displayName: newDisplayName,
+                            });
+                        }else {
+                            alert("the user nickname already in use");
+                            setNewDisplayName("");
                         }
-                    await updateProfile(await authService.currentUser, {
-                        displayName: newDisplayName,
-                    });
+                        }
+                    
                     //}
         refreshUser(newDisplayName);
         } else{
