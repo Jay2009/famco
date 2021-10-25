@@ -1,13 +1,12 @@
 /* eslint-disable import/no-anonymous-default-export */
 import React, { useEffect, useState } from "react";
 import { dbService } from "fbase";
-import { doc, deleteDoc, updateDoc,addDoc } from "firebase/firestore";
+import { doc, updateDoc,addDoc } from "firebase/firestore";
 import { authService } from "fbase";
 import { useHistory } from "react-router";
-import { collection, getDocs, query, where,onSnapshot,orderBy} from "@firebase/firestore";
+import { collection, getDocs, query, where,onSnapshot} from "@firebase/firestore";
 import { updateProfile } from "@firebase/auth";
-import { safeGet } from "@firebase/util";
-import { connectStorageEmulator } from "@firebase/storage";
+
 
 
 export default ({refreshUser,userObj,userInfo,FamcoMsgObj}) => {
@@ -62,8 +61,8 @@ export default ({refreshUser,userObj,userInfo,FamcoMsgObj}) => {
     
     ///////// 이곳 if 문에 auth 에서 @@@구글@@@@@ 로 접속 하였을때를 조건으로 만들어야함 ..........
     const googleUserinfoUpdate = async() => {
-        const isGoogleProvider = authService.currentUser.providerData[0].providerId;
-        if (isGoogleProvider === "google.com" ){
+        const googleProvider = authService.currentUser.providerData[0].providerId;
+        if (googleProvider === "google.com" ){
             await searchingSameIdQuery();
             
             if (firstLoginWithGoogle === false){
@@ -88,7 +87,6 @@ export default ({refreshUser,userObj,userInfo,FamcoMsgObj}) => {
         }
     }
     
-    
 
     useEffect (() => {
         
@@ -106,7 +104,6 @@ export default ({refreshUser,userObj,userInfo,FamcoMsgObj}) => {
             googleUserinfoUpdate();
             }, []);
             
-        
     
    // const UserInfo = doc(dbService, "UserInfo", `${UserInfoObj.id}`);
     const onLogOutClick = () =>{
@@ -114,10 +111,6 @@ export default ({refreshUser,userObj,userInfo,FamcoMsgObj}) => {
         history.push("/");
     };
 
-    
-    
-    
-    
     /*const getMyFamcoMsges = async() => {
         const q = query(
             collection(dbService, "NewFamcoMsg"),
@@ -154,7 +147,7 @@ export default ({refreshUser,userObj,userInfo,FamcoMsgObj}) => {
                         await duplicationForNickname();
                         if(isNicknameExist === false){
                         console.log("addDoc 으로 새로 추가");
-                                try {
+                                try { 
                                     const docRef = await addDoc(collection(dbService, "UserInfo"),addNewUserInfoObj);
                                     console.log("Document written with ID: ", docRef.id);
                                     } catch (error) {
@@ -168,9 +161,7 @@ export default ({refreshUser,userObj,userInfo,FamcoMsgObj}) => {
                             setNewDisplayName("");
                         }
                     }else{
-                        console.log(isNicknameExist,"before duplicain");
                         await duplicationForNickname();
-                        console.log(isNicknameExist,"after duplicain");
                         if(isNicknameExist === false){
                         const q = query(
                             collection(dbService, "UserInfo"),

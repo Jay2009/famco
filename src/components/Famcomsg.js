@@ -3,6 +3,8 @@ import { deleteObject, ref } from "@firebase/storage";
 import { storageService } from "../fbase";
 import { doc, deleteDoc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 
 const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
     const [editing, setEditing] = useState(false);
@@ -30,46 +32,54 @@ const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
             target: {value},
         } = event;
         setNewFamcoMsg(value);
-        console.log(FamcoMsgObj);
-        
     };
     
     return(
-        <div>
+        <div className="famcoMsg">
             {editing ? ( 
                 <>
-                <form onSubmit={onSubmit}> 
-                    <input 
+                <form onSubmit={onSubmit} className="container famcoMsgEdit"> 
+                    <textarea 
                     type="text" 
                     placeholder="Edit your Famco message" 
                     value={NewFamcoMsg} 
-                    required 
+                    required
+                    autoFocus 
                     onChange={onChange}
+                    className="formInput famcoMsgInput"
+                    maxLength="120"
                     />
-                    <input type="submit" value="Update Famco" />
+                    <input type="submit" value="Update"  className="formBtn"/>
                     
                 </form>
-                <button onClick={toggleEditing}>Cancel</button>
+                <span onClick={toggleEditing} className="formBtn cancelBtn">
+                    Cancel
+                </span>
                 </>
                 ) : ( 
                 <>
-                <h4>{FamcoMsgObj.text}</h4>
-                {FamcoMsgObj.attachmentUrl && (
-                    <img src={FamcoMsgObj.attachmentUrl} width="50px"/>
-                )} 
-                {isOwner ? 
-                    (<h5>{userObj.displayName}</h5>
-                        ) : (
-                        <h5>{FamcoMsgObj.name}</h5>)
-                }
-                {isOwner && ( 
-                    <>
-                    <button onClick={onDeleteClick}> Delete Famco</button>
-                    <button onClick={toggleEditing}> Edit Famco</button>
-                    </>
-                )}
-            </>
-                )}
+                    <h4 className="famcoMsgText">
+                    {FamcoMsgObj.attachmentUrl && <img src={FamcoMsgObj.attachmentUrl} className="famcoAttachedImg"/>}
+                        {FamcoMsgObj.text}
+                    </h4>
+                    
+                    {isOwner ? 
+                        (<h5 className="famcoOwner"><br/>{userObj.displayName}</h5>
+                            ) : (
+                            <h5 className="famcoOtherOwners"><br/>{FamcoMsgObj.name}</h5>)
+                    }
+                    {isOwner && (
+                        <div className="famcoMsg__actions"> 
+                            <span onClick={onDeleteClick}>
+                                <FontAwesomeIcon icon={faTrash} />
+                            </span>
+                            <span onClick={toggleEditing}>
+                                <FontAwesomeIcon icon={faPencilAlt} />
+                            </span>
+                        </div>
+                        )}
+                </>
+            )}
         </div>
     );
 };

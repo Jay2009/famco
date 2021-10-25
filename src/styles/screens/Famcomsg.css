@@ -1,0 +1,156 @@
+.famcoMsg-input::placeholder {
+  color: white;
+  opacity: 0.9;
+}
+.famcoMsgInput {
+  width: 270px;
+  height: 100px;
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: 1px solid black;
+  text-align: center;
+  background-color: white;
+  color: black;
+  max-width: 270px;
+  max-height: 100px;
+  min-width: 270px;
+  min-height: 100px;
+}
+
+.famcoMsgEdit .formBtn {
+  cursor: pointer;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  width: 150px;
+}
+
+.famcoMsg {
+  margin-bottom: 15px;
+  background-color: white;
+  width: 100%;
+  max-width: 320px;
+  padding: 15px;
+  border-radius: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: rgba(0, 0, 0, 0.8);
+  overflow-wrap: anywhere;
+}
+
+.famcoMsg h4 {
+  font-size: 13.9px;
+}
+
+.famcoMsg__actions {
+  position: absolute;
+  right: 25px;
+  bottom: 15px;
+}
+
+.famcoMsg__actions span {
+  cursor: pointer;
+}
+
+.famcoMsg__actions span:first-child {
+  margin-right: 10px;
+}
+
+.famcoOwner {
+  color: #1435a1;
+  font-weight: bold;
+}
+.famcoOtherOwners {
+  font-weight: bold;
+  color: #04aaff;
+}
+
+.famcoMsgInput__input {
+  color: black;
+  background-color: white;
+  border: none;
+  border-radius: 10px;
+  height: 320px;
+  width: 100%;
+  max-width: 320px;
+  max-height: 100px;
+  min-width: 320px;
+  min-height: 100px;
+}
+
+.famcoMsgForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.famcoMsgInput__container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: relative;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.famcoMsgInput__post {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  background-color: #04aaff;
+  height: 40px;
+  width: 60px;
+  text-align: center;
+  border-radius: 10px;
+  color: white;
+}
+
+.famcoMsgInput__label {
+  margin: 10px 0px;
+  color: #04aaff;
+  cursor: pointer;
+}
+
+.famcoMsgInput__label span {
+  margin-right: 10px;
+  font-size: 12px;
+}
+
+.famcoMsgForm__attachment {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.famcoMsgForm__attachment img {
+  height: 80px;
+  width: 80px;
+  border-radius: 5px;
+}
+
+.famcoMsgForm__clear {
+  color: #04aaff;
+  cursor: pointer;
+  text-align: center;
+}
+
+.famcoMsgForm__clear span {
+  margin-right: 10px;
+  font-size: 12px;
+}
+
+.famcoMsgText {
+  position: inherit;
+}
+
+.famcoMsg img {
+  margin-top: 10px;
+  border-radius: 10px;
+  width: 290px;
+  height: 290px;
+  float: left;
+  margin-bottom: 5px;
+}

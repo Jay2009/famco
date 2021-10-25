@@ -1,9 +1,11 @@
 import { authService } from "fbase";
 import React, { useState } from "react";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { addDoc, collection, getDocs, query, onSnapshot, orderBy, doc } from "@firebase/firestore";
-import { dbService } from "fbase";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+    faTwitter,
+    faGoogle,
+} from "@fortawesome/free-brands-svg-icons";
 
 const Auth = ({userObj}) => {    
     const [email, setEmail] = useState("");
@@ -50,33 +52,45 @@ const onSocialClick = async(event) => {
     console.log(data);
 }
 return (
-    <div>
-    <form onSubmit={onSubmit}>
+    <div className="authContainer">
+        <FontAwesomeIcon
+            icon={faTwitter}
+            color={"#04AAFF"}
+            size="3x"
+            style={{ marginBottom: 30 }}
+        />
+    <form onSubmit={onSubmit}  className="container">
         <input 
-        name="email" 
-        type="email" 
-        placeholder="Email" 
-        value={email}
-        onChange={onChange}
-        required
+            name="email" 
+            type="email" 
+            placeholder="Email" 
+            value={email}
+            onChange={onChange}
+            className="authInput"
+            required
         />
         <input 
-        name="password"
-        type="password" 
-        placeholder="Password" 
-        value={password}
-        onChange={onChange}
-        required
+            name="password"
+            type="password" 
+            placeholder="Password" 
+            value={password}
+            onChange={onChange}
+            className="authInput"
+            required
         />
-        <input type="submit" value={newAccount ? "Create Account" : "Log In"} 
+        <input type="submit" 
+            className="authInput authSubmit"
+            value={newAccount ? "Create Account" : "Log In"} 
         />
-        {error}
+        {error && <span className="authError">{error}</span>}
     </form>
-    <span onClick={toggleAccount}>
+    <span onClick={toggleAccount} className="authSwitch">
         {newAccount? "Sign in" : "Create Account"}
     </span>
-    <div>
-        <button onClick={onSocialClick} name="google">Continue with Google</button>
+    <div className="authBtns">
+        <button onClick={onSocialClick} name="google" className="authBtn">
+            Continue with Google <FontAwesomeIcon icon={faGoogle} />
+        </button>
     </div>
 </div>
 );

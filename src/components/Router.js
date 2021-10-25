@@ -1,4 +1,4 @@
-import {HashRouter as Router, Route, Switch} from "react-router-dom";
+import {HashRouter as Router, Route} from "react-router-dom";
 import Auth from "../routes/Auth";
 import Home from "../routes/Home";
 import Navigation from "components/Navigation";
@@ -12,14 +12,23 @@ const AppRouther = ({refreshUser,isLoggedIn, userObj, userInfo, NewFamcoMsg}) =>
             
                 {isLoggedIn ? (
                     
-                <>
+                    <div
+                        style={{
+                        maxWidth: 890,
+                        width: "100%",
+                        margin: "0 auto",
+                        marginTop: 80,
+                        display: "flex",
+                        justifyContent: "center",
+                        }}
+                    >
                     <Route exact path="/">
-                        <Home userObj={userObj} userInfo={userInfo}/>
+                        <Home userObj={userObj} />
                     </Route>
                     <Route exact path="/profile">
-                        <Profile userObj={userObj} userInfo={userInfo} refreshUser={refreshUser} FamcoMsgObj={NewFamcoMsg} />
+                        <Profile userObj={userObj}  refreshUser={refreshUser} FamcoMsgObj={NewFamcoMsg} />
                     </Route>         
-                </>
+                </div>
                 
                     ): (
                 <>

@@ -1,15 +1,18 @@
 import Famco from "components/Famcomsg";
 import {v4 as uuidv4} from "uuid";
 import { dbService, storageService } from "fbase";
-import { addDoc, collection, getDocs, query, onSnapshot, orderBy, doc, where } from "@firebase/firestore";
+import { addDoc, collection, getDocs, query, onSnapshot, orderBy, where } from "@firebase/firestore";
 import {ref, uploadString, getDownloadURL} from "@firebase/storage";
 import React, { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const Home = ({userObj,userInfo}) => {
     const [NewFamcoMsg, setNewFamcoMsg] = useState("");
     const [NewFamcoMsges, setNewFamcoMsges] = useState([]);
     const [attachment, setAttachment] = useState("");
-    const [isUserInfoExist, SetUserInfoExist] = useState(false);
+    const [isUserInfoExist, SetIsUserInfoExist] = useState(false);
+    
     const getNewFamcoMsges = async() => {
     const DbNewFamcoMsges = query(collection(dbService,"NewFamcoMsg"));
     const querySnapshot = await getDocs(DbNewFamcoMsges);
@@ -19,12 +22,11 @@ const Home = ({userObj,userInfo}) => {
             id: doc.id,
                 
         }
-            
-        
         setNewFamcoMsges((prev) => [newFamcoMsgObj, ...prev]);
     });
     
 };
+
     const checkUserInfo = async() =>{
         
         const q = query(
@@ -32,16 +34,10 @@ const Home = ({userObj,userInfo}) => {
             where("creatorId", "==", userObj.uid)
             );
             const getDocument = await getDocs(q);
-            getDocument.forEach((isUserInfoExist) => {
-                //console.log(document.id, " doc id ");
-                console.log(getDocument.id,"there is doucment");
-                SetUserInfoExist(true);
-                console.log(isUserInfoExist, " There is data !! on the databasessssssssssssss ");
-                // toggle
+            getDocument.forEach(() => {
+                SetIsUserInfoExist(true);
             });
 }
-
-//console.log(userObj.uid, " There is no data on the database ");
     
     useEffect (() => {
         checkUserInfo();
@@ -55,7 +51,6 @@ const Home = ({userObj,userInfo}) => {
             ...doc.data(),
             }));
             setNewFamcoMsges(famcoArr);
-            
             });
             }, []);
 
@@ -66,6 +61,7 @@ const Home = ({userObj,userInfo}) => {
         const attachmentRef = ref(storageService, `${userObj.uid}/${uuidv4()}`);
         const uploadFile = await uploadString(attachmentRef, attachment, "data_url");
         attachmentUrl = await getDownloadURL(uploadFile.ref);
+        
         }
         const newfamcoPosting = {
             text: NewFamcoMsg,
@@ -86,6 +82,8 @@ const Home = ({userObj,userInfo}) => {
     };
     const onChange = ({ target: { value } }) => {
         setNewFamcoMsg(value);
+        const dt = Date();
+        console.log();
         };
     
     const onFileChange = (event) => {
@@ -108,44 +106,63 @@ const Home = ({userObj,userInfo}) => {
     
     return (
         
-    <div>
+    <div className="container">
         
-        <form onSubmit ={onSubmit}>
+        <form onSubmit ={onSubmit} className="famcoMsgForm">
+        <div className="famcoMsgInput__container">
             {isUserInfoExist ? ( 
                 <>
-            <input 
+                
+            <textarea
+            className="famcoMsgInput__input"
             value={NewFamcoMsg} 
             onChange= {onChange} 
             type="text" 
             placeholder="What's in your mind?" 
-            maxLength={120} 
+            maxLength="120" 
             required
-            />
-            <input
-            type="file" 
-            accept="image/*"
-            onChange={onFileChange}
             />
             <input 
             type="submit" 
             value="Post" 
+            className="famcoMsgInput__post"
             />
+
+            <label for="attach-file" className="famcoMsgInput__label">
+                <span>Add photos</span>
+                <FontAwesomeIcon icon={faPlus} />
+            </label>
+
+            <input
+            id="attach-file"
+            type="file"
+            accept="image/*"
+            onChange={onFileChange}
+            />
+
+            
+
             </>
             ):(
                 <>Add infomation on your profile to start</>
             )}
             {attachment && (
-            <div>
+            <div className="famcoMsgForm__attachment">
                 <img 
-                src= {attachment} 
-                width="50px" 
-                height="50px" 
+                src={attachment}
+                style={{
+                backgroundImage: attachment,
+                }}
                 />
-                <button onClick={onClearAttachment}>Clear</button>
+            <div className="famcoMsgForm__clear" onClick={onClearAttachment}>
+                <span>Remove</span>
+                <FontAwesomeIcon icon={faTimes} />
+            </div>
             </div>
             )}
+            </div>
         </form>
-        <div>         
+        <div style={{ marginTop: 30 }}>         
             {NewFamcoMsges.map((NewFamcoMsg) => (
                 <Famco 
 
