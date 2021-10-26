@@ -192,25 +192,27 @@ export default ({refreshUser,userObj,userInfo,FamcoMsgObj}) => {
     };
 
     return (
-
-        <>
-            <form onSubmit={onSubmit}>
-
-                <>
+        <div className="container">
+            <form onSubmit={onSubmit} className= "profileForm">
                 <input
-                onChange={onChange}
-                type="text"
-                placeholder="Write your user name"
-                value={newDisplayName}
-                required
+                    onChange={onChange}
+                    type="text"
+                    placeholder="Write your user name"
+                    value={newDisplayName}
+                    maxLength="15"
+                    required
+                    autoFocus
+                    className="formInput"
                 />
-
-                    <input type="submit" value="Update name" />
-                    </>
-
-
-            </form>
-        <button onClick={onLogOutClick}>Log Out</button>
-        </>
+                <input 
+                    type="submit" 
+                    value="Update name" 
+                    className="formBtn"
+                />
+                </form>
+                <span className="formBtn cancelBtn logOut" onClick={onLogOutClick}>
+                    Log Out
+                </span>
+        </div>
     );
 };

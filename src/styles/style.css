@@ -3,6 +3,7 @@
 /* screebs */
 @import "screens/Auth.css";
 @import "screens/Famcomsg.css";
+@import "screens/Profile.css";
 
 * {
   box-sizing: border-box;
@@ -51,6 +52,7 @@ form {
   border-radius: 20px;
   border: 1px solid black;
   text-align: center;
+  margin-bottom: 10px;
   background-color: white;
   color: black;
 }
@@ -69,5 +71,22 @@ form {
 .cancelBtn {
   cursor: pointer;
   width: 150px;
-  background-color: rgb(126, 66, 55);
+  background-color: rgb(243, 102, 77);
+}
+
+.displayUserName {
+  font-weight: bold;
+  color: #1435a1;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.noUserName {
+  font-size: 15px;
+  font-weight: bold;
 }

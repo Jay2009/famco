@@ -12,7 +12,15 @@ const Home = ({userObj,userInfo}) => {
     const [NewFamcoMsges, setNewFamcoMsges] = useState([]);
     const [attachment, setAttachment] = useState("");
     const [isUserInfoExist, SetIsUserInfoExist] = useState(false);
-    
+    const date = new Date();
+    const year = String(date.getFullYear());
+    const month = String(date.getMonth()+1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const sec = String(date.getSeconds()).padStart(2,"0");
+    let uploadedDate = year +"/"+ month +"/"+ day +" at "+ hours +" : "+ minutes;
+
     const getNewFamcoMsges = async() => {
     const DbNewFamcoMsges = query(collection(dbService,"NewFamcoMsg"));
     const querySnapshot = await getDocs(DbNewFamcoMsges);
@@ -68,7 +76,9 @@ const Home = ({userObj,userInfo}) => {
             createdAt: Date.now(),
             creatorId: userObj.uid,
             name: userObj.displayName,
+            uploadedDate:  year +"/"+ month +"/"+ day +" At "+ hours +" : "+ minutes,
             attachmentUrl
+            
         };
         try {
             const docRef = await addDoc(collection(dbService, "NewFamcoMsg"), newfamcoPosting);
@@ -82,8 +92,6 @@ const Home = ({userObj,userInfo}) => {
     };
     const onChange = ({ target: { value } }) => {
         setNewFamcoMsg(value);
-        const dt = Date();
-        console.log();
         };
     
     const onFileChange = (event) => {
@@ -144,15 +152,12 @@ const Home = ({userObj,userInfo}) => {
 
             </>
             ):(
-                <>Add infomation on your profile to start</>
+                <div className="noUserName">Add infomation on your profile to start</div>
             )}
             {attachment && (
             <div className="famcoMsgForm__attachment">
                 <img 
                 src={attachment}
-                style={{
-                backgroundImage: attachment,
-                }}
                 />
             <div className="famcoMsgForm__clear" onClick={onClearAttachment}>
                 <span>Remove</span>
@@ -162,15 +167,13 @@ const Home = ({userObj,userInfo}) => {
             )}
             </div>
         </form>
-        <div style={{ marginTop: 30 }}>         
+        <div style={{ marginTop: 30 }}>     
             {NewFamcoMsges.map((NewFamcoMsg) => (
                 <Famco 
-
                 key={NewFamcoMsg.id} 
                 FamcoMsgObj={NewFamcoMsg} 
                 isOwner={NewFamcoMsg.creatorId === userObj.uid}
                 userObj={userObj}
-                userInfo={userInfo}
                 />
             ))}
         </div>

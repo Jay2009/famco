@@ -129,6 +129,7 @@
   height: 80px;
   width: 80px;
   border-radius: 5px;
+  object-fit: cover;
 }
 
 .famcoMsgForm__clear {
@@ -147,10 +148,18 @@
 }
 
 .famcoMsg img {
-  margin-top: 10px;
   border-radius: 10px;
   width: 290px;
   height: 290px;
   float: left;
   margin-bottom: 5px;
+  object-fit: cover;
+}
+
+.FamcoMsgCreatedDate {
+  margin-bottom: 5px;
+  margin-top: -10px;
+  font-style: italic;
+  font-size: 13px;
+  font-weight: 400;
 }

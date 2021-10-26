@@ -57,7 +57,8 @@ const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
                 </span>
                 </>
                 ) : ( 
-                <>
+                <>  
+                    <h5 className="FamcoMsgCreatedDate">{FamcoMsgObj.uploadedDate}</h5>
                     <h4 className="famcoMsgText">
                     {FamcoMsgObj.attachmentUrl && <img src={FamcoMsgObj.attachmentUrl} className="famcoAttachedImg"/>}
                         {FamcoMsgObj.text}
