@@ -11,6 +11,7 @@ const Home = ({userObj,userInfo}) => {
     const [NewFamcoMsg, setNewFamcoMsg] = useState("");
     const [NewFamcoMsges, setNewFamcoMsges] = useState([]);
     const [attachment, setAttachment] = useState("");
+    const [isAttachmentExist, SetIsAttachmentExist] = useState(false);
     const [isUserInfoExist, SetIsUserInfoExist] = useState(false);
     const date = new Date();
     const year = String(date.getFullYear());
@@ -18,8 +19,7 @@ const Home = ({userObj,userInfo}) => {
     const day = String(date.getDate()).padStart(2, "0");
     const hours = String(date.getHours()).padStart(2, "0");
     const minutes = String(date.getMinutes()).padStart(2, "0");
-    const sec = String(date.getSeconds()).padStart(2,"0");
-    let uploadedDate = year +"/"+ month +"/"+ day +" at "+ hours +" : "+ minutes;
+    //const sec = String(date.getSeconds()).padStart(2,"0");
 
     const getNewFamcoMsges = async() => {
     const DbNewFamcoMsges = query(collection(dbService,"NewFamcoMsg"));
@@ -67,6 +67,7 @@ const Home = ({userObj,userInfo}) => {
         let attachmentUrl = "";
         if(attachment !== ""){
         const attachmentRef = ref(storageService, `${userObj.uid}/${uuidv4()}`);
+        // 여기에 업로드 어태치먼트가 이상해서그랭
         const uploadFile = await uploadString(attachmentRef, attachment, "data_url");
         attachmentUrl = await getDownloadURL(uploadFile.ref);
         
@@ -89,13 +90,14 @@ const Home = ({userObj,userInfo}) => {
             
             setNewFamcoMsg("");
             setAttachment("");
+            SetIsAttachmentExist(false);
     };
     const onChange = ({ target: { value } }) => {
         setNewFamcoMsg(value);
         };
     
     const onFileChange = (event) => {
-        
+
         const {
             target: {files},
         } = event;
@@ -108,9 +110,17 @@ const Home = ({userObj,userInfo}) => {
                 } = finishedEvent;
             setAttachment(result);
         };
+        SetIsAttachmentExist(true);
+        console.log(theFile.name,"this is attachmentttttttttt");
         reader.readAsDataURL(theFile);
+        
     };
-    const onClearAttachment = () => setAttachment(null);
+
+
+    const onClearAttachment = (evnet) => {
+        SetIsAttachmentExist(false);
+        setAttachment("");
+    }
     
     return (
         
@@ -120,35 +130,37 @@ const Home = ({userObj,userInfo}) => {
         <div className="famcoMsgInput__container">
             {isUserInfoExist ? ( 
                 <>
-                
             <textarea
-            className="famcoMsgInput__input"
-            value={NewFamcoMsg} 
-            onChange= {onChange} 
-            type="text" 
-            placeholder="What's in your mind?" 
-            maxLength="120" 
-            required
+                className="famcoMsgInput__input"
+                value={NewFamcoMsg} 
+                onChange= {onChange} 
+                type="text" 
+                placeholder=" What's on your mind?" 
+                maxLength="120" 
+                required
             />
             <input 
             type="submit" 
             value="Post" 
             className="famcoMsgInput__post"
             />
-
-            <label for="attach-file" className="famcoMsgInput__label">
-                <span>Add photos</span>
+            {isAttachmentExist ? (
+                <></>
+            ) : (
+                <>
+                <label htmlFor="attach-file" className="famcoMsgInput__label">
                 <FontAwesomeIcon icon={faPlus} />
-            </label>
-
-            <input
-            id="attach-file"
-            type="file"
-            accept="image/*"
-            onChange={onFileChange}
-            />
-
-            
+                    <span> Add photo</span>  
+                </label>
+                <input
+                className="famcoMsgInput__labelChild"
+                id="attach-file"
+                type="file"
+                accept="image/*"
+                onChange={onFileChange}
+                />
+                </>
+            )}
 
             </>
             ):(
@@ -160,7 +172,6 @@ const Home = ({userObj,userInfo}) => {
                 src={attachment}
                 />
             <div className="famcoMsgForm__clear" onClick={onClearAttachment}>
-                <span>Remove</span>
                 <FontAwesomeIcon icon={faTimes} />
             </div>
             </div>

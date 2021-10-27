@@ -46,7 +46,7 @@ const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
                     required
                     autoFocus 
                     onChange={onChange}
-                    className="formInput famcoMsgInput"
+                    className="famcoMsgInput"
                     maxLength="120"
                     />
                     <input type="submit" value="Update"  className="formBtn"/>
