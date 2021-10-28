@@ -7,12 +7,16 @@ import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTimes } from "@fortawesome/free-solid-svg-icons";
 
-const Home = ({userObj,userInfo}) => {
+
+const Home = ({userObj}) => {
     const [NewFamcoMsg, setNewFamcoMsg] = useState("");
     const [NewFamcoMsges, setNewFamcoMsges] = useState([]);
     const [attachment, setAttachment] = useState("");
     const [isAttachmentExist, SetIsAttachmentExist] = useState(false);
     const [isUserInfoExist, SetIsUserInfoExist] = useState(false);
+    
+    
+
     const date = new Date();
     const year = String(date.getFullYear());
     const month = String(date.getMonth()+1).padStart(2, "0");
@@ -78,6 +82,8 @@ const Home = ({userObj,userInfo}) => {
             creatorId: userObj.uid,
             name: userObj.displayName,
             uploadedDate:  year +"/"+ month +"/"+ day +" At "+ hours +" : "+ minutes,
+            likes: 0,
+            likedName: "",
             attachmentUrl
             
         };

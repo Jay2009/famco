@@ -5,7 +5,7 @@ import Navigation from "components/Navigation";
 import Profile from "routes/Profile";
 
 
-const AppRouther = ({refreshUser,isLoggedIn, userObj, userInfo, NewFamcoMsg}) => {
+const AppRouther = ({refreshUser,isLoggedIn, userObj, NewFamcoMsg}) => {
     return(
         <Router>
             {isLoggedIn && <Navigation userObj={userObj}/>}

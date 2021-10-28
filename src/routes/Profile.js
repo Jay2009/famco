@@ -9,7 +9,7 @@ import { updateProfile } from "@firebase/auth";
 
 
 
-export default ({refreshUser,userObj,userInfo,FamcoMsgObj}) => {
+export default ({refreshUser,userObj}) => {
     const history = useHistory();
     const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
     const [NewUserInfo, setNewUserInfo] = useState([]);

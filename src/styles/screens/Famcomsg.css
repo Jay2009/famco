@@ -63,10 +63,12 @@
 .famcoOwner {
   color: #385498;
   font-weight: bold;
+  margin-top: 40px;
 }
 .famcoOtherOwners {
   font-weight: bold;
   color: #04aaff;
+  margin-top: 40px;
 }
 
 .famcoMsgInput__input {
@@ -188,4 +190,15 @@
   font-style: italic;
   font-size: 13px;
   font-weight: 400;
+}
+
+.FamcoMsgLikes {
+  margin-left: -230px;
+  margin-bottom: -60px;
+}
+
+.FamcoMsgLikes img {
+  width: 15px;
+  height: 15px;
+  border-radius: 0;
 }
