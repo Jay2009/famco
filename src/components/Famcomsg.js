@@ -2,7 +2,7 @@ import { dbService } from "fbase";
 import { deleteObject, ref } from "@firebase/storage";
 import { storageService } from "../fbase";
 import { doc, deleteDoc, updateDoc } from "firebase/firestore";
-import React, { useState,useEffect } from "react";
+import React, { useState,useEffect,useClick, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 import heartIcon1 from "../assets/heart1.png";
@@ -11,15 +11,19 @@ import heartIcon3 from "../assets/heart3.png";
 import heartIcon4 from "../assets/heart4.png";
 import { addDoc, collection, getDocs, query, onSnapshot, orderBy, where } from "@firebase/firestore";
 import { text } from "@fortawesome/fontawesome-svg-core";
+import HeartButton from "./likes";
+
 
 const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
     const [editing, setEditing] = useState(false);
     const [NewFamcoMsg, setNewFamcoMsg] = useState(FamcoMsgObj.text);
     const famcoTextRef = doc(dbService, "NewFamcoMsg", `${FamcoMsgObj.id}`) ;
     const [isLiked, setIsLiked] = useState(false);
-    const [likeDb, setLikeDb] = useState(0);
+    const [whoLiked, setWhoLiked] = useState(false);
     const [likedId, setLikedId] = useState(""); 
-
+    const [alreadyLiked, setAlreadyLiked] = useState(false);
+    
+    
 
 
 
@@ -60,37 +64,37 @@ const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
             
             const getDocument = await getDocs(q);
             getDocument.forEach(() => {
-                
-                
+                setWhoLiked(true);
             });
             
-            
+    
 }
 
+
     useEffect (() => {
-        //checkUserLiked();
-        //console.log(isLiked," initial IS LIKED");
-        //console.log(isLiked," IS LIKED");
-        if(isLiked === true){
-           //이곳에  useState 가 아닌 다른거 넣어야될듯....................... 왜냐면 스테이트 한번에 업로드되어지니...@@@@@@@@@@@@@@
-            //setLikeDb(likeDb+1);
-            console.log(likeDb,"this is true likedb yo");
-            updateDoc(famcoTextRef, {
-                likes:  FamcoMsgObj.likes+1,
-                likedName: userObj.displayName,
-            });
-        }
-        
-        if(isLiked === false){
-                //setLikeDb(likeDb-1);
-            if(FamcoMsgObj.likes > 0){
-                console.log(likeDb,"this is false likedb yo@@@@@@@");
+        checkUserLiked();
+        console.log(whoLiked,"wholiked state");
+        if(alreadyLiked){
+            console.log(alreadyLiked," afterthis is set alreadyliked");
+            if(isLiked === true){
                 updateDoc(famcoTextRef, {
-                    likes: FamcoMsgObj.likes-1,
-                    likedName:"" ,
+                    likes:  FamcoMsgObj.likes+1,
+                    likedName: userObj.displayName,
                 });
+                
             }
+    
+            if(isLiked === false){
+                if(FamcoMsgObj.likes > 0){
+                    updateDoc(famcoTextRef, {
+                        likes: FamcoMsgObj.likes-1,
+                        likedName: "",
+                    });
+                }
+            };
         }
+    
+        
         // const q = query(
         //     collection(dbService, "NewFamcoMsg"),
         //     where("likedName", "==", userObj.displayName)
@@ -103,13 +107,25 @@ const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
         //     setLikedId(likeArr);
         //     });
             
-            }, [isLiked]);
+            },[isLiked]);
+        
+    
+        
+    
 
-    const toggleLike = async () => setIsLiked((prev) => !prev);
+    const test = async() =>{
+        
+    }
+        
+    const toggleLike = () => {
+        setAlreadyLiked(true);
+        console.log(alreadyLiked,"this is set alreadyliked");
+        setIsLiked((prev) => !prev);
+    }
     //console.log(isLiked," IS LIKED");
 
-    const aa = async () => {
-    
+    const Aa = () => {
+        
     }
     
     return(
@@ -146,11 +162,9 @@ const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
                     <br/>
                     <br/>
                     <div className="FamcoMsgLikes">
-                        <img 
-                            
-                            src={isLiked?(heartIcon2):(heartIcon1)}
+                        <HeartButton 
+                            like={isLiked}
                             onClick={toggleLike}
-                            
                         /> 
                         <span>{FamcoMsgObj.likes}</span>
                     </div>    
