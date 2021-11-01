@@ -4,7 +4,7 @@ import { dbService } from "fbase";
 import { doc, updateDoc,addDoc } from "firebase/firestore";
 import { authService } from "fbase";
 import { useHistory } from "react-router";
-import { collection, getDocs, query, where,onSnapshot} from "@firebase/firestore";
+import { collection, getDocs, query, where,onSnapshot, orderBy} from "@firebase/firestore";
 import { updateProfile } from "@firebase/auth";
 
 
@@ -91,13 +91,14 @@ export default ({refreshUser,userObj}) => {
     useEffect (() => {
         
         const q = query(
-            collection(dbService, "UserInfo")
-            //orderBy("createdAt", "desc")
+            collection(dbService, "UserInfo"),
+            orderBy("createdAt", "desc")
             );
             onSnapshot(q, (snapshot) => {
             const userInfoArr = snapshot.docs.map((doc) => ({
             id: doc.id,
             ...doc.data(),
+            
             }));
             setNewUserInfo(userInfoArr);
             });

@@ -2,7 +2,7 @@ import { dbService } from "fbase";
 import { deleteObject, ref } from "@firebase/storage";
 import { storageService } from "../fbase";
 import { doc, deleteDoc, updateDoc } from "firebase/firestore";
-import React, { useState,useEffect,useClick, useRef } from "react";
+import React, { useState,useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 import heartIcon1 from "../assets/heart1.png";
@@ -11,10 +11,9 @@ import heartIcon3 from "../assets/heart3.png";
 import heartIcon4 from "../assets/heart4.png";
 import { addDoc, collection, getDocs, query, onSnapshot, orderBy, where } from "@firebase/firestore";
 import { text } from "@fortawesome/fontawesome-svg-core";
-import HeartButton from "./likes";
 
 
-const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
+const Famco = ({FamcoMsgObj, isOwner, userObj,heart}) => {
     const [editing, setEditing] = useState(false);
     const [NewFamcoMsg, setNewFamcoMsg] = useState(FamcoMsgObj.text);
     const famcoTextRef = doc(dbService, "NewFamcoMsg", `${FamcoMsgObj.id}`) ;
@@ -22,7 +21,7 @@ const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
     const [whoLiked, setWhoLiked] = useState(false);
     const [likedId, setLikedId] = useState(""); 
     const [alreadyLiked, setAlreadyLiked] = useState(false);
-    
+    const [didIliked,setDidIliked] = useState(false);
     
 
 
@@ -54,34 +53,30 @@ const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
         setNewFamcoMsg(value);
         
     };
+    useEffect(() => {
+            if(isLiked === true){
+                setIsLiked(true);
+                console.log(isLiked,"after  isliked state  didmount");
+            }
+            if(isLiked === false){
+                setIsLiked(false);
+                console.log(isLiked,"after this is isliked state  didmount");
+            };
+    },[])
     
-    const checkUserLiked = async() =>{
-        
-        const q = query(
-            collection(dbService, "NewFamcoMsg"),
-            where("likedName", "==", userObj.displayName)
-            );
-            
-            const getDocument = await getDocs(q);
-            getDocument.forEach(() => {
-                setWhoLiked(true);
-            });
-            
     
-}
-
 
     useEffect (() => {
-        checkUserLiked();
-        console.log(whoLiked,"wholiked state");
+        //if(whoLiked == true)
         if(alreadyLiked){
-            console.log(alreadyLiked," afterthis is set alreadyliked");
+            
+            console.log(alreadyLiked," after this is set already liked");
             if(isLiked === true){
                 updateDoc(famcoTextRef, {
                     likes:  FamcoMsgObj.likes+1,
                     likedName: userObj.displayName,
+                    didIliked: true
                 });
-                
             }
     
             if(isLiked === false){
@@ -89,12 +84,11 @@ const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
                     updateDoc(famcoTextRef, {
                         likes: FamcoMsgObj.likes-1,
                         likedName: "",
+                        didIliked: false
                     });
                 }
             };
-        }
-    
-        
+    }
         // const q = query(
         //     collection(dbService, "NewFamcoMsg"),
         //     where("likedName", "==", userObj.displayName)
@@ -106,16 +100,9 @@ const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
         //     }));
         //     setLikedId(likeArr);
         //     });
-            
             },[isLiked]);
         
     
-        
-    
-
-    const test = async() =>{
-        
-    }
         
     const toggleLike = () => {
         setAlreadyLiked(true);
@@ -162,7 +149,8 @@ const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
                     <br/>
                     <br/>
                     <div className="FamcoMsgLikes">
-                        <HeartButton 
+                        <img src={FamcoMsgObj.didIliked?heartIcon2:heartIcon1}
+                            didIliked={didIliked} 
                             like={isLiked}
                             onClick={toggleLike}
                         /> 

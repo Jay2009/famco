@@ -1,7 +1,7 @@
 import Famco from "components/Famcomsg";
 import {v4 as uuidv4} from "uuid";
 import { dbService, storageService } from "fbase";
-import { addDoc, collection, getDocs, query, onSnapshot, orderBy, where } from "@firebase/firestore";
+import { addDoc, collection, getDocs, query, onSnapshot, orderBy, where, updateDoc, doc } from "@firebase/firestore";
 import {ref, uploadString, getDownloadURL} from "@firebase/storage";
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,6 +14,10 @@ const Home = ({userObj}) => {
     const [attachment, setAttachment] = useState("");
     const [isAttachmentExist, SetIsAttachmentExist] = useState(false);
     const [isUserInfoExist, SetIsUserInfoExist] = useState(false);
+    const [heart, setHeart] = useState("");
+
+
+    
     
     
 
@@ -50,6 +54,30 @@ const Home = ({userObj}) => {
                 SetIsUserInfoExist(true);
             });
 }
+
+const checkUserLiked = async() =>{
+
+    const q = query(
+        collection(dbService, "NewFamcoMsg"),
+        where("likedName", "==", userObj.displayName)
+        );
+        
+        const getDocument = await getDocs(q);
+        //const famcoTextRef = doc(dbService, "NewFamcoMsg", `${FamcoMsgObj.id}`) ;
+        
+        getDocument.forEach((doc) => {
+            console.log(doc.id,"  ",doc.data().likedName);
+            setHeart(true);
+        });
+
+        // onSnapshot(q, (snapshot) => {
+        //     const userInfoArr = snapshot.docs.map((doc) => ({
+        //     id: doc.id,
+        //     ...doc.data(),
+        //     }));
+        //     //
+        //     });
+}
     
     useEffect (() => {
         checkUserInfo();
@@ -64,6 +92,7 @@ const Home = ({userObj}) => {
             }));
             setNewFamcoMsges(famcoArr);
             });
+            checkUserLiked();
             }, []);
 
     const onSubmit = async(event) => {       
@@ -84,6 +113,7 @@ const Home = ({userObj}) => {
             uploadedDate:  year +"/"+ month +"/"+ day +" At "+ hours +" : "+ minutes,
             likes: 0,
             likedName: "",
+            didIliked: false,
             attachmentUrl
             
         };
@@ -187,6 +217,7 @@ const Home = ({userObj}) => {
         <div style={{ marginTop: 30 }}>     
             {NewFamcoMsges.map((NewFamcoMsg) => (
                 <Famco 
+                heart={heart}
                 key={NewFamcoMsg.id} 
                 FamcoMsgObj={NewFamcoMsg} 
                 isOwner={NewFamcoMsg.creatorId === userObj.uid}
