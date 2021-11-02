@@ -2,15 +2,11 @@ import { dbService } from "fbase";
 import { deleteObject, ref } from "@firebase/storage";
 import { storageService } from "../fbase";
 import { doc, deleteDoc, updateDoc } from "firebase/firestore";
-import React, { useState,useEffect, useRef } from "react";
+import React, { useState,useEffect} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 import heartIcon1 from "../assets/heart1.png";
 import heartIcon2 from "../assets/heart2.png";
-import heartIcon3 from "../assets/heart3.png";
-import heartIcon4 from "../assets/heart4.png";
-import { addDoc, collection, getDocs, query, onSnapshot, orderBy, where } from "@firebase/firestore";
-import { text } from "@fortawesome/fontawesome-svg-core";
 
 
 const Famco = ({FamcoMsgObj, isOwner, userObj,heart}) => {
@@ -18,11 +14,8 @@ const Famco = ({FamcoMsgObj, isOwner, userObj,heart}) => {
     const [NewFamcoMsg, setNewFamcoMsg] = useState(FamcoMsgObj.text);
     const famcoTextRef = doc(dbService, "NewFamcoMsg", `${FamcoMsgObj.id}`) ;
     const [isLiked, setIsLiked] = useState(false);
-    const [whoLiked, setWhoLiked] = useState(false);
-    const [likedId, setLikedId] = useState(""); 
     const [alreadyLiked, setAlreadyLiked] = useState(false);
-    const [didIliked,setDidIliked] = useState(false);
-    
+    let didIlike = FamcoMsgObj.likedName.indexOf(userObj.displayName);
 
 
 
@@ -37,82 +30,51 @@ const Famco = ({FamcoMsgObj, isOwner, userObj,heart}) => {
         }
     };
     const toggleEditing = () => setEditing((prev) => !prev);
+
     const onSubmit = async (event) => {
         event.preventDefault();
         await updateDoc(famcoTextRef, {
             text: NewFamcoMsg,
         });
         setEditing(false);
-        
-        
     };
+
     const onChange = (event) => {
         const {
             target: {value},
         } = event;
         setNewFamcoMsg(value);
-        
     };
-    useEffect(() => {
-            if(isLiked === true){
-                setIsLiked(true);
-                console.log(isLiked,"after  isliked state  didmount");
-            }
-            if(isLiked === false){
-                setIsLiked(false);
-                console.log(isLiked,"after this is isliked state  didmount");
-            };
-    },[])
-    
-    
 
     useEffect (() => {
-        //if(whoLiked == true)
         if(alreadyLiked){
-            
-            console.log(alreadyLiked," after this is set already liked");
-            if(isLiked === true){
-                updateDoc(famcoTextRef, {
-                    likes:  FamcoMsgObj.likes+1,
-                    likedName: userObj.displayName,
-                    didIliked: true
-                });
-            }
-    
-            if(isLiked === false){
-                if(FamcoMsgObj.likes > 0){
-                    updateDoc(famcoTextRef, {
-                        likes: FamcoMsgObj.likes-1,
-                        likedName: "",
-                        didIliked: false
-                    });
-                }
-            };
-    }
-        // const q = query(
-        //     collection(dbService, "NewFamcoMsg"),
-        //     where("likedName", "==", userObj.displayName)
-        //     );
-        //     onSnapshot(q, (snapshot) => {
-        //     const likeArr = snapshot.docs.map((doc) => ({
-        //     id: doc.id,
-        //     ...doc.data(),
-        //     }));
-        //     setLikedId(likeArr);
-        //     });
-            },[isLiked]);
         
-    
+            if(didIlike <= 0){
+                console.log(didIlike," 라이크 없당 ");
+                    updateDoc(famcoTextRef, {
+                        likes:  FamcoMsgObj.likes+1,
+                        likedName: FamcoMsgObj.likedName +","+userObj.displayName,
+                        
+                    });
+            }
+
+            if(didIlike !== -1){
+                console.log(didIlike," 라이크 이미 했내 새캬");
+                    if(FamcoMsgObj.likes > 0){
+                        updateDoc(famcoTextRef, {
+                            likes: FamcoMsgObj.likes-1,
+                            likedName: FamcoMsgObj.likedName.replace((","+userObj.displayName),""),
+                            
+                        });
+                    }
+                
+            }
+        }
+    },[isLiked]);
         
     const toggleLike = () => {
         setAlreadyLiked(true);
-        console.log(alreadyLiked,"this is set alreadyliked");
         setIsLiked((prev) => !prev);
-    }
-    //console.log(isLiked," IS LIKED");
-
-    const Aa = () => {
-        
     }
     
     return(
@@ -149,9 +111,7 @@ const Famco = ({FamcoMsgObj, isOwner, userObj,heart}) => {
                     <br/>
                     <br/>
                     <div className="FamcoMsgLikes">
-                        <img src={FamcoMsgObj.didIliked?heartIcon2:heartIcon1}
-                            didIliked={didIliked} 
-                            like={isLiked}
+                        <img src={didIlike !== -1 ?heartIcon2:heartIcon1} 
                             onClick={toggleLike}
                         /> 
                         <span>{FamcoMsgObj.likes}</span>
