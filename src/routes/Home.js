@@ -63,7 +63,6 @@ const Home = ({userObj}) => {
             ...doc.data(),
             }));
             setNewFamcoMsges(famcoArr);
-            console.log(NewFamcoMsges, "Fanmco users");
             });
             
             }, []);
@@ -102,7 +101,6 @@ const Home = ({userObj}) => {
     };
     const onChange = ({ target: { value } }) => {
         setNewFamcoMsg(value);
-        
         };
     
     const onFileChange = (event) => {

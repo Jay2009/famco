@@ -4,6 +4,7 @@
 @import "screens/Auth.css";
 @import "screens/Famcomsg.css";
 @import "screens/Profile.css";
+@import "screens/About.css";
 
 * {
   box-sizing: border-box;

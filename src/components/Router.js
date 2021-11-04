@@ -1,6 +1,7 @@
 import {HashRouter as Router, Route} from "react-router-dom";
 import Auth from "../routes/Auth";
 import Home from "../routes/Home";
+import About from "../routes/About";
 import Navigation from "components/Navigation";
 import Profile from "routes/Profile";
 
@@ -28,6 +29,9 @@ const AppRouther = ({refreshUser,isLoggedIn, userObj, NewFamcoMsg}) => {
                     <Route exact path="/profile">
                         <Profile userObj={userObj}  refreshUser={refreshUser} FamcoMsgObj={NewFamcoMsg} />
                     </Route>         
+                    <Route exact path="/about">
+                        <About userObj={userObj} />
+                    </Route>
                 </div>
                 
                     ): (

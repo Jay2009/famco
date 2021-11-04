@@ -2,7 +2,9 @@ import React from "react";
 import {Link} from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTwitter } from "@fortawesome/free-brands-svg-icons";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+
+
 
 
 const Navigation = ({userObj}) => 
@@ -18,6 +20,7 @@ const Navigation = ({userObj}) =>
             to="/profile"
                 style={{
                     marginLeft: 10,
+                    marginRight: 10,
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
@@ -30,6 +33,15 @@ const Navigation = ({userObj}) =>
                 ? `${userObj.displayName}`
                 : "Profile"}
             </span>
+            </Link>
+        </li>
+        <li>
+            <Link
+            to="/about"
+            style={{ marginLeft: 10 }}
+            >
+            <FontAwesomeIcon icon={faInfoCircle} color={"#04AAFF"} size="2x" />
+
             </Link>
         </li>
     </ul>
