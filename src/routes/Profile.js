@@ -17,9 +17,6 @@ export default ({refreshUser,userObj}) => {
     let firstLoginWithGoogle = false;
     let isNicknameExist = false;
 
-    
-    
-    
     const getUpdatedUsersInfo = async() => {
     const DbUpdatedUsersInfo = query(collection(dbService,"UserInfo"));
     const querySnapshot = await getDocs(DbUpdatedUsersInfo);
@@ -31,7 +28,6 @@ export default ({refreshUser,userObj}) => {
         }
         setNewUserInfo((prev) => [updateUsersInfo, ...prev]);
         });
-        
     };
 
     const searchingSameIdQuery = async() =>{
@@ -70,8 +66,10 @@ export default ({refreshUser,userObj}) => {
                 await duplicationForNickname();
                 if (isNicknameExist === false){
                     const addNewGoogleUserInfoObj = {
+                    createdAt: Date.now(),
                     creatorId: userObj.uid ,
-                    name: newDisplayName
+                    name: newDisplayName,
+                    whatPostLiked : ""
                     }
                     try {
                         console.log(" 구글 접속이 처음이시군요? 유저 정보를 data base에 자동 등록합니다.");
@@ -89,19 +87,20 @@ export default ({refreshUser,userObj}) => {
     
 
     useEffect (() => {
-        
-        const q = query(
-            collection(dbService, "UserInfo"),
-            orderBy("createdAt", "desc")
-            );
-            onSnapshot(q, (snapshot) => {
-            const userInfoArr = snapshot.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
+    const q = query(
+        collection(dbService, "UserInfo"),
+        orderBy("createdAt", "desc")
+        );
+        onSnapshot(q, (snapshot) => {
+        const userInfoArr = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
             
-            }));
-            setNewUserInfo(userInfoArr);
-            });
+        }));
+        setNewUserInfo(userInfoArr);
+        
+        });
+
             googleUserinfoUpdate();
             }, []);
             
@@ -130,9 +129,11 @@ export default ({refreshUser,userObj}) => {
             target: { value },
         } = event;
         setNewDisplayName(value.trim());
+        
     };
     
     const onSubmit = async(event) => {
+        console.log(NewUserInfo);
         event.preventDefault();
         if(newDisplayName.length > 2){
             
@@ -141,7 +142,9 @@ export default ({refreshUser,userObj}) => {
                         
                     const addNewUserInfoObj = {
                                 creatorId: userObj.uid ,
-                                name: newDisplayName
+                                name: newDisplayName,
+                                createdAt: Date.now(),
+                                whatPostLiked : ""
                             }
                             
                     if(duplication === false){

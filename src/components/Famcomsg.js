@@ -1,22 +1,31 @@
 import { dbService } from "fbase";
 import { deleteObject, ref } from "@firebase/storage";
 import { storageService } from "../fbase";
-import { doc, deleteDoc, updateDoc } from "firebase/firestore";
-import React, { useState,useEffect} from "react";
+import { doc, deleteDoc, updateDoc, query, collection,orderBy, onSnapshot,getDocs,where } from "firebase/firestore";
+import React, { useState,useEffect, useContext} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 import heartIcon1 from "../assets/heart1.png";
 import heartIcon2 from "../assets/heart2.png";
 
 
-const Famco = ({FamcoMsgObj, isOwner, userObj,heart}) => {
+
+
+const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
     const [editing, setEditing] = useState(false);
     const [NewFamcoMsg, setNewFamcoMsg] = useState(FamcoMsgObj.text);
     const famcoTextRef = doc(dbService, "NewFamcoMsg", `${FamcoMsgObj.id}`) ;
+    
+    
     const [isLiked, setIsLiked] = useState(false);
     const [alreadyLiked, setAlreadyLiked] = useState(false);
-    let didIlike = FamcoMsgObj.likedName.indexOf(userObj.displayName);
+    const [userInfo, setUserInfo] = useState("");
+    
 
+    let didIlike = FamcoMsgObj.likedName.indexOf(userObj.uid);
+    
+    //console.log(allUsers.map( (document) => document.id ),"야야야야야야야");
+    //setUserInfo(allUsers.map( (hey) => hey.whatPostLiked )
 
 
     const onDeleteClick = async () => {
@@ -40,22 +49,30 @@ const Famco = ({FamcoMsgObj, isOwner, userObj,heart}) => {
     };
 
     const onChange = (event) => {
+        
         const {
             target: {value},
         } = event;
         setNewFamcoMsg(value);
+        
     };
 
+    
+    
+
     useEffect (() => {
+        console.log(userObj.uid,"this is user id");
         if(alreadyLiked){
         
             if(didIlike <= 0){
                 console.log(didIlike," 라이크 없당 ");
                     updateDoc(famcoTextRef, {
                         likes:  FamcoMsgObj.likes+1,
-                        likedName: FamcoMsgObj.likedName +","+userObj.displayName,
-                        
+                        likedName: FamcoMsgObj.likedName +","+userObj.uid,
                     });
+                    
+                    
+                    
             }
 
             if(didIlike !== -1){
@@ -63,9 +80,9 @@ const Famco = ({FamcoMsgObj, isOwner, userObj,heart}) => {
                     if(FamcoMsgObj.likes > 0){
                         updateDoc(famcoTextRef, {
                             likes: FamcoMsgObj.likes-1,
-                            likedName: FamcoMsgObj.likedName.replace((","+userObj.displayName),""),
-                            
+                            likedName: FamcoMsgObj.likedName.replace((","+userObj.uid),""),
                         });
+                        
                     }
                 
             }

@@ -34,8 +34,9 @@ const Home = ({userObj}) => {
         }
         setNewFamcoMsges((prev) => [newFamcoMsgObj, ...prev]);
     });
-    
     };
+    
+    
 
     const checkUserInfo = async() =>{
         
@@ -50,7 +51,7 @@ const Home = ({userObj}) => {
     }
 
     
-    useEffect (() => {
+    useEffect (() => { 
         checkUserInfo();
         const q = query(
             collection(dbService, "NewFamcoMsg"),
@@ -62,6 +63,7 @@ const Home = ({userObj}) => {
             ...doc.data(),
             }));
             setNewFamcoMsges(famcoArr);
+            console.log(NewFamcoMsges, "Fanmco users");
             });
             
             }, []);
@@ -100,6 +102,7 @@ const Home = ({userObj}) => {
     };
     const onChange = ({ target: { value } }) => {
         setNewFamcoMsg(value);
+        
         };
     
     const onFileChange = (event) => {
@@ -183,6 +186,7 @@ const Home = ({userObj}) => {
             </div>
             )}
             </div>
+            
         </form>
         <div style={{ marginTop: 30 }}>     
             {NewFamcoMsges.map((NewFamcoMsg) => (
