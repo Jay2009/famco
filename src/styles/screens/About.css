@@ -7,12 +7,14 @@
   margin-bottom: 80px;
 }
 
-.aboutHeader span,
-.aboutMe span {
+.aboutHeader span {
   margin-bottom: 5px;
 }
 
-.aboutFamco {
+.aboutFamco,
+.aboutMe,
+.aboutPortfolio,
+.aboutContact {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -23,31 +25,28 @@
   margin-bottom: 5px;
 }
 
-.aboutFamco span {
+.aboutFamco span,
+.aboutMe span,
+.aboutPortfolio span {
   font-size: 16px;
   font-style: italic;
   line-height: 20px;
 }
 
-.aboutMe {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  display: flex;
-  margin-bottom: 60px;
+.aboutPortfolio img {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 250px;
+  height: 250px;
+  border-radius: 30px;
 }
 
-.aboutMe a {
+.aboutPortfolio span {
+  font-weight: bold;
+}
+
+.aboutContact a,
+.aboutPortfolio a {
   color: blue;
   text-decoration: underline;
-}
-
-.jayLogo {
-  width: 30px;
-  height: 30px;
-  border-radius: 5px;
-}
-.aboutMe span {
-  font-size: 16px;
-  font-style: italic;
 }

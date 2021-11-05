@@ -1,5 +1,8 @@
 @import "reset.css";
 
+/* component */
+@import "components/Navigation.css";
+
 /* screebs */
 @import "screens/Auth.css";
 @import "screens/Famcomsg.css";

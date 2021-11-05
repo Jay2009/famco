@@ -181,6 +181,7 @@ export default ({refreshUser,userObj}) => {
                             await updateProfile(await authService.currentUser, {
                                 displayName: newDisplayName,
                             });
+                            alert("Update success !");
                         }else {
                             alert("the user nickname already in use");
                             setNewDisplayName("");
@@ -203,7 +204,7 @@ export default ({refreshUser,userObj}) => {
                     type="text"
                     placeholder="Write your user name"
                     value={newDisplayName}
-                    maxLength="15"
+                    maxLength="12"
                     required
                     autoFocus
                     className="formInput"

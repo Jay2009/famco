@@ -194,7 +194,7 @@
 }
 
 .FamcoMsgLikes {
-  margin-left: -230px;
+  margin-left: -250px;
   margin-bottom: -60px;
 }
 
@@ -203,4 +203,8 @@
   height: 15px;
   border-radius: 0;
   cursor: pointer;
+}
+
+.FamcoMsgLikes span {
+  margin-left: 3px;
 }

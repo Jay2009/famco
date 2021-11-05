@@ -1,0 +1,14 @@
+.navigation {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.navigation li:first-child {
+  margin-right: 200px;
+}
+
+.navigation__user {
+  margin-top: -40px;
+}

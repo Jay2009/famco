@@ -9,13 +9,24 @@ import { faUser, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 
 const Navigation = ({userObj}) => 
 <nav>
-    <ul  style={{ display: "flex", justifyContent: "center", marginTop: 50 }}>
+    <ul  className ="navigation">
         <li>
             <Link to="/" style={{ marginRight: 10 }}>
             <FontAwesomeIcon icon={faTwitter} color={"#04AAFF"} size="2x" />
             </Link>
         </li>
+        
         <li>
+            <Link
+            to="/about"
+            style={{ marginLeft: 10 }}
+            >
+            <FontAwesomeIcon icon={faInfoCircle} color={"#04AAFF"} size="2x" />
+
+            </Link>
+        </li>
+    </ul>
+    <li className="navigation__user">
             <Link 
             to="/profile"
                 style={{
@@ -35,15 +46,6 @@ const Navigation = ({userObj}) =>
             </span>
             </Link>
         </li>
-        <li>
-            <Link
-            to="/about"
-            style={{ marginLeft: 10 }}
-            >
-            <FontAwesomeIcon icon={faInfoCircle} color={"#04AAFF"} size="2x" />
-
-            </Link>
-        </li>
-    </ul>
 </nav>
+
 export default Navigation;
