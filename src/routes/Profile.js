@@ -197,7 +197,7 @@ export default ({refreshUser,userObj}) => {
     };
 
     return (
-        <div className="container">
+        <div className="container__profile">
             <form onSubmit={onSubmit} className= "profileForm">
                 <input
                     onChange={onChange}
@@ -218,6 +218,9 @@ export default ({refreshUser,userObj}) => {
                 <span className="formBtn cancelBtn logOut" onClick={onLogOutClick}>
                     Log Out
                 </span>
+                <span className="formSpace"> </span>
+                
+                
         </div>
     );
 };

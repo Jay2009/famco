@@ -8,44 +8,47 @@ import { faUser, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 
 
 const Navigation = ({userObj}) => 
-<nav>
-    <ul  className ="navigation">
-        <li>
-            <Link to="/" style={{ marginRight: 10 }}>
+<nav className="navigation">
+    <ul  className ="navigation__homeInfo">
+        
+        <li className="navBar">
+            <Link 
+            className="logo" 
+            to="/" 
+            >
             <FontAwesomeIcon icon={faTwitter} color={"#04AAFF"} size="2x" />
             </Link>
         </li>
         
-        <li>
+        <li className="navBar">
             <Link
             to="/about"
-            style={{ marginLeft: 10 }}
+            
             >
             <FontAwesomeIcon icon={faInfoCircle} color={"#04AAFF"} size="2x" />
 
             </Link>
         </li>
+
     </ul>
-    <li className="navigation__user">
+    <ul className="navigation__user">
+        <li className="navUser">
             <Link 
             to="/profile"
-                style={{
-                    marginLeft: 10,
-                    marginRight: 10,
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    fontSize: 12,
-                }}
             > 
-                <FontAwesomeIcon icon={faUser} color={"#04AAFF"} size="2x" />
-            <span className="displayUserName" style={{ marginTop: 10 }}>
+            <FontAwesomeIcon icon={faUser} color={"#04AAFF"} size="2x" />
+            </Link>
+        </li>
+        
+        <li className="navuser__name" >
+            <span className="displayUserName">
             {userObj.displayName
                 ? `${userObj.displayName}`
                 : "Profile"}
             </span>
-            </Link>
         </li>
+
+    </ul>
 </nav>
 
 export default Navigation;

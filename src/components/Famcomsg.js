@@ -123,8 +123,9 @@ const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
                     <h4 className="famcoMsgText">
                         
                     {FamcoMsgObj.attachmentUrl && <img src={FamcoMsgObj.attachmentUrl} className="famcoAttachedImg"/>}
-                        {FamcoMsgObj.text}
+                        
                     </h4>
+                    {FamcoMsgObj.text}
                     <br/>
                     <br/>
                     <div className="FamcoMsgLikes">
@@ -141,11 +142,11 @@ const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
                     }
                     {isOwner && (
                         <div className="famcoMsg__actions"> 
-                            <span onClick={onDeleteClick}>
-                                <FontAwesomeIcon icon={faTrash} />
-                            </span>
                             <span onClick={toggleEditing}>
                                 <FontAwesomeIcon icon={faPencilAlt} />
+                            </span>
+                            <span onClick={onDeleteClick}>
+                                <FontAwesomeIcon icon={faTrash} />
                             </span>
                         </div>
                         )}

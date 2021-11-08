@@ -129,7 +129,6 @@
 
   color: #04aaff;
   cursor: pointer;
-  z-index: 3;
 }
 
 .famcoMsgInput__label span {
@@ -141,7 +140,7 @@
   width: 50px;
   height: 15px;
   margin-top: -25px;
-  z-index: 1;
+
   opacity: 0;
 }
 

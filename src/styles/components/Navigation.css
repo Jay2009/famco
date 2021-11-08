@@ -1,14 +1,62 @@
 .navigation {
+  z-index: 1;
+  position: relative;
+}
+.navigation__homeInfo {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin-top: 50px;
+
+  padding-left: 50px;
+  padding-right: 50px;
 }
 
-.navigation li:first-child {
-  margin-right: 200px;
+.navBar {
+  position: fixed;
+  background-color: #dee3eb;
+  padding: 10px 0px 20px 0px;
+  border-style: solid;
+  border-color: black;
+}
+.logo {
+  margin-left: 30px;
+}
+
+.navigation__homeInfo li:first-child {
+  margin-left: 0px;
+  padding-right: 263px;
+}
+.navigation__homeInfo li:last-child {
+  margin-left: 240px;
 }
 
 .navigation__user {
-  margin-top: -40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  list-style: none;
+}
+
+.navUser {
+  position: fixed;
+  margin-top: 40px;
+}
+
+.navuser__name {
+  margin-bottom: -90px;
+  position: fixed;
+}
+
+.userIcon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  justify-items: center;
+}
+
+.navigation__user span {
+  display: flex;
+  justify-content: center;
 }
