@@ -61,7 +61,7 @@ const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
     
 
     useEffect (() => {
-        console.log(userObj.uid,"this is user id");
+
         if(alreadyLiked){
         
             if(didIlike <= 0){

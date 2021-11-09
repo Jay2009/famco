@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { faUser, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-import { addDoc, collection, getDocs, query, onSnapshot, orderBy, where, } from "@firebase/firestore";
+import { doc, collection, getDocs,getDoc, query, onSnapshot, orderBy, where, } from "@firebase/firestore";
 import { dbService, storageService } from "fbase";
 import vip from "../assets/vip.png";
 import crown1 from "../assets/crown1.png";
@@ -29,16 +29,19 @@ const Navigation = ({userObj}) => {
         
         const q = query(
             collection(dbService, "UserInfo"),
-            where("vip", "==", "jandc914")
+            where("creatorId", "==", userObj.uid),
             );
-            const getDocument = await getDocs(q);
-            console.log(getDocument,"get documentsssssssss");
-
-            getDocument.forEach(async(document) => {
-                console.log(document.id, " there is true");
-                //if(creatorId == userObj.uid)
-                SetIsUserVip(true);
+            const getDocuments = await getDocs(q);
             
+            getDocuments.forEach(async(document) => {
+                console.log(userObj.uid," user obj u id");
+                const docRef = doc(dbService, "UserInfo", `${document.id}`);
+                const getDocument = await getDoc(docRef);
+                    if(getDocument.data().vip == "jandc914"){
+                        SetIsUserVip(true);
+                    }else {
+                        
+                    }
             });
     }
 
@@ -46,7 +49,7 @@ const Navigation = ({userObj}) => {
 useEffect (() => { 
         
     checkVip();
-    console.log(isUserVip);
+    //console.log(userObj.vip, " userobj vip!!!");
         
         }, []);
 
