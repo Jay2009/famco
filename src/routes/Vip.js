@@ -14,7 +14,6 @@ const Home = ({userObj}) => {
     const [attachment, setAttachment] = useState("");
     const [isAttachmentExist, SetIsAttachmentExist] = useState(false);
     const [isUserInfoExist, SetIsUserInfoExist] = useState(false);
-    
 
     const date = new Date();
     const year = String(date.getFullYear());
@@ -50,9 +49,6 @@ const Home = ({userObj}) => {
                 SetIsUserInfoExist(true);
             });
     }
-
-    
-
 
     
 

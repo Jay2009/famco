@@ -4,11 +4,13 @@ import Home from "../routes/Home";
 import About from "../routes/About";
 import Navigation from "components/Navigation";
 import Profile from "routes/Profile";
+import Vip from "routes/Vip";
+
 
 
 const AppRouther = ({refreshUser,isLoggedIn, userObj, NewFamcoMsg}) => {
     return(
-        <Router>
+        <Router >
             {isLoggedIn && <Navigation userObj={userObj}/>}
             
                 {isLoggedIn ? (
@@ -23,15 +25,22 @@ const AppRouther = ({refreshUser,isLoggedIn, userObj, NewFamcoMsg}) => {
                         justifyContent: "center",
                         }}
                     >
-                    <Route exact path="/">
+                    <Route exact path="/" >
                         <Home userObj={userObj} />
                     </Route>
-                    <Route exact path="/profile">
+
+                    <Route exact path="/profile" >
                         <Profile userObj={userObj}  refreshUser={refreshUser} FamcoMsgObj={NewFamcoMsg} />
-                    </Route>         
-                    <Route exact path="/about">
+                    </Route>
+
+                    <Route exact path="/about" >
                         <About userObj={userObj} />
                     </Route>
+
+                    <Route eact path="/vip" >
+                        <Vip userObj={userObj} />
+                    </Route>
+
                 </div>
                 
                     ): (

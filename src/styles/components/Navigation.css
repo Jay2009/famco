@@ -14,7 +14,7 @@
 .navBar {
   position: fixed;
   background-color: #dee3eb;
-  padding: 10px 0px 20px 0px;
+  padding: 15px 0px 20px 0px;
   border-style: solid;
   border-color: black;
 }
@@ -40,11 +40,11 @@
 
 .navUser {
   position: fixed;
-  margin-top: 40px;
+  margin-top: 50px;
 }
 
 .navuser__name {
-  margin-bottom: -90px;
+  margin-bottom: -100px;
   position: fixed;
 }
 
@@ -59,4 +59,16 @@
 .navigation__user span {
   display: flex;
   justify-content: center;
+}
+
+.navVip {
+  list-style: none;
+  filter: opacity(0.6) drop-shadow(0 0 0 #04aaff);
+  position: fixed;
+  margin-top: 55px;
+  margin-left: 125px;
+}
+.navVip img {
+  width: 35px;
+  height: 35px;
 }
