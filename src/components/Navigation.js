@@ -7,7 +7,7 @@ import { doc, collection, getDocs,getDoc, query, onSnapshot, orderBy, where, } f
 import { dbService, storageService } from "fbase";
 import vip from "../assets/vip.png";
 import crown1 from "../assets/crown1.png";
-import crown2 from "../assets/crown2.png";
+import cuteCrown from "../assets/cuteCrown.png";
 import crown3 from "../assets/crown3.png";
 
 
@@ -103,7 +103,7 @@ return (
             to="/vip"
             onClick={onClick}
             > 
-            <img src={crown2}/>
+            <img src={cuteCrown}/>
             </Link>
         </li>
         ):( <></> )

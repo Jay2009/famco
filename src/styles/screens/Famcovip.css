@@ -1,0 +1,17 @@
+.vip__span {
+  font-size: 17px;
+  margin-bottom: 20px;
+  font-weight: bold;
+  background: linear-gradient(to right, #671cc4, #5673bc, #5673bd);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.vipTag {
+  margin-top: -15px;
+  margin-bottom: 0px;
+  margin-right: 300px;
+  width: 15px;
+  height: 15px;
+  opacity: 0.4;
+}

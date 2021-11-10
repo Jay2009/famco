@@ -8,6 +8,7 @@
 @import "screens/Famcomsg.css";
 @import "screens/Profile.css";
 @import "screens/About.css";
+@import "screens/Famcovip.css";
 
 * {
   box-sizing: border-box;

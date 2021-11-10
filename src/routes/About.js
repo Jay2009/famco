@@ -47,7 +47,7 @@ const About = () => {
                     <a href="https://jay2009.github.io/chrome_app/index.html"> 
                         <img src={checkInvestingScore} className="kokoatalk2"/> 
                     </a>
-                    <text>Check your stock investment score ! </text><br/>
+                    <span>Check your stock investment score ! </span><br/>
                     <a href="https://jay2009.github.io/chrome_app/index.html">Link </a>
                 </div>
 
@@ -56,7 +56,7 @@ const About = () => {
                     <a href="https://jay2009.github.io/kokoa-clone-2020/"> 
                         <img src={kokoatalk2} className="kokoatalk2"/> 
                     </a>
-                    <text>Dosen't it look pretty familiar to you? </text><br/>
+                    <span>Dosen't it look pretty familiar to you? </span><br/>
                     <a href="https://jay2009.github.io/kokoa-clone-2020/">Link </a>
                 </div>
                 

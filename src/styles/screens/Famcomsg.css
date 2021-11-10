@@ -49,7 +49,7 @@
 .famcoMsg__actions {
   position: absolute;
   right: 25px;
-  bottom: 15px;
+  bottom: 14px;
 }
 
 .famcoMsg__actions span {
@@ -60,10 +60,19 @@
   margin-right: 10px;
 }
 
+.famcoAdmin {
+  background: linear-gradient(to right, #671cc4, #5673bc, #5673bd);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+  margin-top: 40px;
+  font-family: cursive;
+}
+
 .famcoOwner {
   color: #385498;
   font-weight: bold;
-  margin-top: 40px;
+  margin-top: 43px;
 }
 .famcoOtherOwners {
   font-weight: bold;
@@ -175,7 +184,7 @@
   position: inherit;
 }
 
-.famcoMsg img {
+.famcoAttachedImg {
   border-radius: 10px;
   width: 290px;
   height: 290px;
@@ -194,16 +203,29 @@
 
 .FamcoMsgLikes {
   margin-left: -250px;
-  margin-bottom: -60px;
+  margin-bottom: -56px;
 }
 
 .FamcoMsgLikes img {
   width: 15px;
   height: 15px;
+  margin-bottom: -3px;
   border-radius: 0;
   cursor: pointer;
 }
 
 .FamcoMsgLikes span {
   margin-left: 3px;
+}
+.FamcoMsgLikes :last-child {
+  top: 30px;
+}
+
+.megaphone {
+  margin-top: -13px;
+  margin-right: -70px;
+  width: 13px;
+  height: 13px;
+  color: #fe1a1a;
+  opacity: 0.6;
 }

@@ -14,9 +14,7 @@
 .navBar {
   position: fixed;
   background-color: #dee3eb;
-  padding: 15px 0px 20px 0px;
-  border-style: solid;
-  border-color: black;
+  padding: 15px 0px 30px 10px;
 }
 .logo {
   margin-left: 30px;
@@ -24,7 +22,7 @@
 
 .navigation__homeInfo li:first-child {
   margin-left: 0px;
-  padding-right: 263px;
+  padding-right: 280px;
 }
 .navigation__homeInfo li:last-child {
   margin-left: 240px;
@@ -63,7 +61,6 @@
 
 .navVip {
   list-style: none;
-  filter: opacity(0.6) drop-shadow(0 0 0 #04aaff);
   position: fixed;
   margin-top: 58px;
   margin-left: 125px;
@@ -71,4 +68,5 @@
 .navVip img {
   width: 35px;
   height: 35px;
+  opacity: 0.5;
 }

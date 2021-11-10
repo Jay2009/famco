@@ -1,7 +1,7 @@
-import Famco from "components/Famcomsg";
+import FamcoVip from "components/Famcovip";
 import {v4 as uuidv4} from "uuid";
 import { dbService, storageService } from "fbase";
-import { addDoc, collection, getDocs, query, onSnapshot, orderBy, where, } from "@firebase/firestore";
+import { addDoc,doc, collection,getDoc, getDocs, query, onSnapshot, orderBy, where, } from "@firebase/firestore";
 import {ref, uploadString, getDownloadURL} from "@firebase/storage";
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,6 +14,7 @@ const Home = ({userObj}) => {
     const [attachment, setAttachment] = useState("");
     const [isAttachmentExist, SetIsAttachmentExist] = useState(false);
     const [isUserInfoExist, SetIsUserInfoExist] = useState(false);
+    const [isUserVip, SetIsUserVip] = useState(false);
 
     const date = new Date();
     const year = String(date.getFullYear());
@@ -24,7 +25,7 @@ const Home = ({userObj}) => {
     //const sec = String(date.getSeconds()).padStart(2,"0");
 
     const getNewFamcoMsges = async() => {
-    const DbNewFamcoMsges = query(collection(dbService,"NewFamcoMsg"));
+    const DbNewFamcoMsges = query(collection(dbService,"NewFamcoVip"));
     const querySnapshot = await getDocs(DbNewFamcoMsges);
     querySnapshot.forEach((doc) => {
         const newFamcoMsgObj = {
@@ -38,8 +39,29 @@ const Home = ({userObj}) => {
     
     
 
-    const checkUserInfo = async() =>{
+    const checkVip = async() =>{
         
+        const q = query(
+            collection(dbService, "UserInfo"),
+            where("creatorId", "==", userObj.uid),
+            );
+            const getDocuments = await getDocs(q);
+            
+            getDocuments.forEach(async(document) => {
+                console.log(userObj.uid," user obj u id");
+                const docRef = doc(dbService, "UserInfo", `${document.id}`);
+                const getDocument = await getDoc(docRef);
+                    if(getDocument.data().vip == "jandc914"){
+                        SetIsUserVip(true);
+                    }else {
+                        
+                    }
+            });
+    }
+
+
+    const checkUserInfo = async() =>{
+        checkVip();
         const q = query(
             collection(dbService, "UserInfo"),
             where("creatorId", "==", userObj.uid)
@@ -56,7 +78,7 @@ const Home = ({userObj}) => {
         
         checkUserInfo();
         const q = query(
-            collection(dbService, "NewFamcoMsg"),
+            collection(dbService, "NewFamcoVip"),
             orderBy("createdAt", "desc")
             );
             onSnapshot(q, (snapshot) => {
@@ -91,7 +113,7 @@ const Home = ({userObj}) => {
             
         };
         try {
-            const docRef = await addDoc(collection(dbService, "NewFamcoMsg"), newfamcoPosting);
+            const docRef = await addDoc(collection(dbService, "NewFamcoVip"), newfamcoPosting);
             console.log("Document written with ID: ", docRef.id);
             } catch (error) {
             console.error("Error adding document: ", error);
@@ -132,8 +154,11 @@ const Home = ({userObj}) => {
     }
     
     return (
-        
+        <>
+    {isUserVip ? (    
     <div className="container">
+
+        <span className="vip__span">Welcome to VIP room!</span>
         
         <form onSubmit ={onSubmit} className="famcoMsgForm">
         <div className="famcoMsgInput__container">
@@ -188,17 +213,21 @@ const Home = ({userObj}) => {
             </div>
             
         </form>
-        <div style={{ marginTop: 30 }}>     
+        <div  style={{ marginTop: 30 }}>     
             {NewFamcoMsges.map((NewFamcoMsg) => (
-                <Famco 
+                <FamcoVip 
                 key={NewFamcoMsg.id} 
-                FamcoMsgObj={NewFamcoMsg} 
+                FamcoVipObj={NewFamcoMsg} 
                 isOwner={NewFamcoMsg.creatorId === userObj.uid}
                 userObj={userObj}
                 />
             ))}
         </div>
+        
     </div>
+    ) : ( <span className="vip__span"> You need the access for VIP room.</span> )}
+    </>
     );
+    
 };
 export default Home;

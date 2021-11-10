@@ -4,7 +4,7 @@ import { storageService } from "../fbase";
 import { doc, deleteDoc, updateDoc, query, collection,orderBy, onSnapshot,getDocs,where } from "firebase/firestore";
 import React, { useState,useEffect, useContext} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faPencilAlt, faBullhorn } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 import heartIcon1 from "../assets/heart1.png";
 import heartIcon2 from "../assets/heart2.png";
 import cuteCrown from "../assets/cuteCrown.png";
@@ -12,19 +12,19 @@ import cuteCrown from "../assets/cuteCrown.png";
 
 
 
-const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
+const FamcoVip = ({FamcoVipObj, isOwner, userObj}) => {
     const [editing, setEditing] = useState(false);
-    const [NewFamcoMsg, setNewFamcoMsg] = useState(FamcoMsgObj.text);
-    const famcoTextRef = doc(dbService, "NewFamcoMsg", `${FamcoMsgObj.id}`) ;
-    const [isAdmin, setIsAdmin] = useState(false);
+    const [NewFamcoMsg, setNewFamcoMsg] = useState(FamcoVipObj.text);
+    const famcoTextRef = doc(dbService, "NewFamcoVip", `${FamcoVipObj.id}`) ;
     
     
     const [isLiked, setIsLiked] = useState(false);
     const [alreadyLiked, setAlreadyLiked] = useState(false);
+    const [userInfo, setUserInfo] = useState("");
     
 
-    let didIlike = FamcoMsgObj.likedName.indexOf(userObj.uid);
-    //let isAdmin = false;
+    let didIlike = FamcoVipObj.likedName.indexOf(userObj.uid);
+    
     //console.log(allUsers.map( (document) => document.id ),"야야야야야야야");
     //setUserInfo(allUsers.map( (hey) => hey.whatPostLiked )
 
@@ -34,8 +34,8 @@ const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
         
         if(ok){
             await deleteDoc(famcoTextRef);
-            if(FamcoMsgObj.attachmentUrl) {
-            await deleteObject(ref(storageService, FamcoMsgObj.attachmentUrl));
+            if(FamcoVipObj.attachmentUrl) {
+            await deleteObject(ref(storageService, FamcoVipObj.attachmentUrl));
             }
         }
     };
@@ -63,20 +63,13 @@ const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
 
     useEffect (() => {
 
-        if(FamcoMsgObj.name == "ADMIN"){
-            setIsAdmin(true);
-            console.log(userObj.displayName,isAdmin," what is is admin now?");
-        }else{
-            setIsLiked(false);
-        }
-
         if(alreadyLiked){
         
             if(didIlike <= 0){
                 console.log(didIlike," 라이크 없당 ");
                     updateDoc(famcoTextRef, {
-                        likes:  FamcoMsgObj.likes+1,
-                        likedName: FamcoMsgObj.likedName +","+userObj.uid,
+                        likes:  FamcoVipObj.likes+1,
+                        likedName: FamcoVipObj.likedName +","+userObj.uid,
                     });
                     
                     
@@ -85,10 +78,10 @@ const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
 
             if(didIlike !== -1){
                 console.log(didIlike," 라이크 이미 했내 새캬");
-                    if(FamcoMsgObj.likes > 0){
+                    if(FamcoVipObj.likes > 0){
                         updateDoc(famcoTextRef, {
-                            likes: FamcoMsgObj.likes-1,
-                            likedName: FamcoMsgObj.likedName.replace((","+userObj.uid),""),
+                            likes: FamcoVipObj.likes-1,
+                            likedName: FamcoVipObj.likedName.replace((","+userObj.uid),""),
                         });
                         
                     }
@@ -103,7 +96,7 @@ const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
     }
     
     return(
-        <div className="famcoMsg">
+        <div className="famcoMsg famcoVip" >
             {editing ? ( 
                 <>
                 <form onSubmit={onSubmit} className="container famcoMsgEdit"> 
@@ -126,31 +119,31 @@ const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
                 </>
                 ) : ( 
                 <>  
+                        <img src= {cuteCrown} className="vipTag" />
+                        
+                        <h5 className="FamcoMsgCreatedDate">{FamcoVipObj.uploadedDate}</h5>
                     
-                    <h5 className="FamcoMsgCreatedDate">{FamcoMsgObj.uploadedDate}</h5>
-                    
+
                     <h4 className="famcoMsgText">
                         
-                    {FamcoMsgObj.attachmentUrl && <img src={FamcoMsgObj.attachmentUrl} className="famcoAttachedImg"/>}
+                    {FamcoVipObj.attachmentUrl && <img src={FamcoVipObj.attachmentUrl} className="famcoAttachedImg"/>}
                         
                     </h4>
-                    {FamcoMsgObj.text}
+                    {FamcoVipObj.text}
                     <br/>
                     <br/>
                     <div className="FamcoMsgLikes">
                         <img src={didIlike !== -1 ?heartIcon2:heartIcon1} 
                             onClick={toggleLike}
                         /> 
-                        <span>{FamcoMsgObj.likes}</span>
+                        <span>{FamcoVipObj.likes}</span>
                     </div>    
                     
-                    {isOwner ?(
-                        <h5 className="famcoOwner"> {userObj.displayName}</h5>
-                        ) : (
-                        <h5 className="famcoOtherOwners"> {FamcoMsgObj.name}</h5>       
-                        )
+                    {isOwner ? 
+                        (<h5 className="famcoOwner"> {userObj.displayName}</h5>
+                            ) : (
+                            <h5 className="famcoOtherOwners"> {FamcoVipObj.name}</h5>)
                     }
-                    {isAdmin? <FontAwesomeIcon icon={faBullhorn}  className="megaphone" /> : <> </> }
                     {isOwner && (
                         <div className="famcoMsg__actions"> 
                             <span onClick={toggleEditing}>
@@ -159,14 +152,14 @@ const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
                             <span onClick={onDeleteClick}>
                                 <FontAwesomeIcon icon={faTrash} />
                             </span>
-                            
                         </div>
                         )}
                 </>
             )}
         </div>
+        
     );
 };
 
 
-export default Famco;
+export default FamcoVip;
