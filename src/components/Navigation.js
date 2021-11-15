@@ -9,7 +9,7 @@ import vip from "../assets/vip.png";
 import crown1 from "../assets/crown1.png";
 import cuteCrown from "../assets/cuteCrown.png";
 import crown3 from "../assets/crown3.png";
-
+import FAMCO from "../assets/FAMCO.png";
 
 
 
@@ -66,7 +66,7 @@ return (
             to="/" 
             onClick={onClick}
             >
-            <FontAwesomeIcon icon={faTwitter} color={"#04AAFF"} size="2x" />
+            <img src={FAMCO}></img>
             </Link>
         </li>
         

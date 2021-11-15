@@ -2,10 +2,8 @@ import { authService } from "fbase";
 import React, { useState } from "react";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-    faTwitter,
-    faGoogle,
-} from "@fortawesome/free-brands-svg-icons";
+import { faGoogle } from "@fortawesome/free-brands-svg-icons";
+import FAMCO from "../assets/FAMCO.png";
 
 const Auth = ({userObj}) => {    
     const [email, setEmail] = useState("");
@@ -53,12 +51,10 @@ const onSocialClick = async(event) => {
 }
 return (
     <div className="authContainer">
-        <FontAwesomeIcon
-            icon={faTwitter}
-            color={"#04AAFF"}
-            size="3x"
-            style={{ marginBottom: 30 }}
+        <img src={FAMCO}
+            className="authIcon"
         />
+
     <form onSubmit={onSubmit}  className="container">
         <input 
             name="email" 
