@@ -1,30 +1,30 @@
 {
   "files": {
-    "main.css": "/set%20PUBLIC_URL=https://Jay2009.github.io/famco/static/css/main.0363a11c.chunk.css",
-    "main.js": "/set%20PUBLIC_URL=https://Jay2009.github.io/famco/static/js/main.69a8c6a9.chunk.js",
-    "main.js.map": "/set%20PUBLIC_URL=https://Jay2009.github.io/famco/static/js/main.69a8c6a9.chunk.js.map",
-    "runtime-main.js": "/set%20PUBLIC_URL=https://Jay2009.github.io/famco/static/js/runtime-main.4aa8df82.js",
-    "runtime-main.js.map": "/set%20PUBLIC_URL=https://Jay2009.github.io/famco/static/js/runtime-main.4aa8df82.js.map",
-    "static/js/2.53d496cf.chunk.js": "/set%20PUBLIC_URL=https://Jay2009.github.io/famco/static/js/2.53d496cf.chunk.js",
-    "static/js/2.53d496cf.chunk.js.map": "/set%20PUBLIC_URL=https://Jay2009.github.io/famco/static/js/2.53d496cf.chunk.js.map",
-    "index.html": "/set%20PUBLIC_URL=https://Jay2009.github.io/famco/index.html",
-    "static/css/main.0363a11c.chunk.css.map": "/set%20PUBLIC_URL=https://Jay2009.github.io/famco/static/css/main.0363a11c.chunk.css.map",
-    "static/js/2.53d496cf.chunk.js.LICENSE.txt": "/set%20PUBLIC_URL=https://Jay2009.github.io/famco/static/js/2.53d496cf.chunk.js.LICENSE.txt",
-    "static/media/FAMCO.79983dba.png": "/set%20PUBLIC_URL=https://Jay2009.github.io/famco/static/media/FAMCO.79983dba.png",
-    "static/media/checkInvestingScore.52797942.PNG": "/set%20PUBLIC_URL=https://Jay2009.github.io/famco/static/media/checkInvestingScore.52797942.PNG",
-    "static/media/crown3.eb79103c.png": "/set%20PUBLIC_URL=https://Jay2009.github.io/famco/static/media/crown3.eb79103c.png",
-    "static/media/cuteCrown.8d0b09b9.png": "/set%20PUBLIC_URL=https://Jay2009.github.io/famco/static/media/cuteCrown.8d0b09b9.png",
-    "static/media/heart1.5041d0a0.png": "/set%20PUBLIC_URL=https://Jay2009.github.io/famco/static/media/heart1.5041d0a0.png",
-    "static/media/heart2.cb2fc326.png": "/set%20PUBLIC_URL=https://Jay2009.github.io/famco/static/media/heart2.cb2fc326.png",
-    "static/media/javiorlogo.53bbc39c.jpg": "/set%20PUBLIC_URL=https://Jay2009.github.io/famco/static/media/javiorlogo.53bbc39c.jpg",
-    "static/media/kokoatalk.0d8bb4ee.PNG": "/set%20PUBLIC_URL=https://Jay2009.github.io/famco/static/media/kokoatalk.0d8bb4ee.PNG",
-    "static/media/kokoatalk2.f2884164.PNG": "/set%20PUBLIC_URL=https://Jay2009.github.io/famco/static/media/kokoatalk2.f2884164.PNG",
-    "static/media/vip.333d1477.png": "/set%20PUBLIC_URL=https://Jay2009.github.io/famco/static/media/vip.333d1477.png"
+    "main.css": "/famco/static/css/main.0363a11c.chunk.css",
+    "main.js": "/famco/static/js/main.59834ba2.chunk.js",
+    "main.js.map": "/famco/static/js/main.59834ba2.chunk.js.map",
+    "runtime-main.js": "/famco/static/js/runtime-main.d269a909.js",
+    "runtime-main.js.map": "/famco/static/js/runtime-main.d269a909.js.map",
+    "static/js/2.5005f9df.chunk.js": "/famco/static/js/2.5005f9df.chunk.js",
+    "static/js/2.5005f9df.chunk.js.map": "/famco/static/js/2.5005f9df.chunk.js.map",
+    "index.html": "/famco/index.html",
+    "static/css/main.0363a11c.chunk.css.map": "/famco/static/css/main.0363a11c.chunk.css.map",
+    "static/js/2.5005f9df.chunk.js.LICENSE.txt": "/famco/static/js/2.5005f9df.chunk.js.LICENSE.txt",
+    "static/media/FAMCO.79983dba.png": "/famco/static/media/FAMCO.79983dba.png",
+    "static/media/checkInvestingScore.52797942.PNG": "/famco/static/media/checkInvestingScore.52797942.PNG",
+    "static/media/crown3.eb79103c.png": "/famco/static/media/crown3.eb79103c.png",
+    "static/media/cuteCrown.8d0b09b9.png": "/famco/static/media/cuteCrown.8d0b09b9.png",
+    "static/media/heart1.5041d0a0.png": "/famco/static/media/heart1.5041d0a0.png",
+    "static/media/heart2.cb2fc326.png": "/famco/static/media/heart2.cb2fc326.png",
+    "static/media/javiorlogo.53bbc39c.jpg": "/famco/static/media/javiorlogo.53bbc39c.jpg",
+    "static/media/kokoatalk.0d8bb4ee.PNG": "/famco/static/media/kokoatalk.0d8bb4ee.PNG",
+    "static/media/kokoatalk2.f2884164.PNG": "/famco/static/media/kokoatalk2.f2884164.PNG",
+    "static/media/vip.333d1477.png": "/famco/static/media/vip.333d1477.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.4aa8df82.js",
-    "static/js/2.53d496cf.chunk.js",
+    "static/js/runtime-main.d269a909.js",
+    "static/js/2.5005f9df.chunk.js",
     "static/css/main.0363a11c.chunk.css",
-    "static/js/main.69a8c6a9.chunk.js"
+    "static/js/main.59834ba2.chunk.js"
   ]
 }
