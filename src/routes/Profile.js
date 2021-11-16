@@ -207,15 +207,15 @@ export default ({refreshUser,userObj}) => {
                     maxLength="12"
                     required
                     autoFocus
-                    className="formInput"
+                    className="profileFormInput"
                 />
                 <input 
                     type="submit" 
                     value="Update name" 
-                    className="formBtn"
+                    className="profileFormBtn"
                 />
                 </form>
-                <span className="formBtn cancelBtn logOut" onClick={onLogOutClick}>
+                <span className="profileFormBtn cancelBtn logOut" onClick={onLogOutClick}>
                     Log Out
                 </span>
                 <span className="formSpace"> </span>
