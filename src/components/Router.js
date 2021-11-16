@@ -11,6 +11,7 @@ import Vip from "routes/Vip";
 const AppRouther = ({refreshUser,isLoggedIn, userObj, NewFamcoMsg}) => {
     return(
         <Router >
+            
             {isLoggedIn && <Navigation userObj={userObj}/>}
             
                 {isLoggedIn ? (

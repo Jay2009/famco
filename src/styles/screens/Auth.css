@@ -59,9 +59,12 @@
   font-size: 12px;
   text-align: center;
   width: 150px;
-  background: rgb(252, 246, 246);
   cursor: pointer;
   font-weight: bold;
+  background: none;
+}
+
+.authBtn__span {
   background: linear-gradient(
     to right,
     rgb(247, 27, 45),
@@ -70,6 +73,9 @@
     rgb(44, 116, 224),
     rgb(247, 27, 45)
   );
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }

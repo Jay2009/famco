@@ -1,12 +1,14 @@
 .navigation {
   z-index: 1;
   position: relative;
-  display: flex;
-  flex-direction: column;
+  bottom: 100px;
 }
 
 .navigation__position {
   position: fixed;
+  overflow: hidden;
+  transform: translate3d(0, 0, 0);
+  -webkit-overflow-scrolling: touch;
   margin: 0 auto;
   left: 0;
   right: 0;

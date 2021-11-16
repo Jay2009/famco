@@ -115,7 +115,7 @@ const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
                     className="famcoMsgInput"
                     maxLength="120"
                     />
-                    <input type="submit" value="Update"  className="formBtn"/>
+                    <input type="submit" value="Update"  className="formBtn" />
                     
                 </form>
                 <span onClick={toggleEditing} className="formBtn cancelBtn">

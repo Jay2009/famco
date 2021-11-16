@@ -85,7 +85,8 @@ return (
     </span>
     <div className="authBtns">
         <button onClick={onSocialClick} name="google" className="authBtn">
-            Continue with Google <FontAwesomeIcon icon={faGoogle} className="google" />
+            <span className="authBtn__span">Continue with Google</span> 
+            <FontAwesomeIcon icon={faGoogle} className="google" />
         </button>
     </div>
 </div>
