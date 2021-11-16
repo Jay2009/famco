@@ -48,10 +48,9 @@ const Home = ({userObj}) => {
             const getDocuments = await getDocs(q);
             
             getDocuments.forEach(async(document) => {
-                console.log(userObj.uid," user obj u id");
                 const docRef = doc(dbService, "UserInfo", `${document.id}`);
                 const getDocument = await getDoc(docRef);
-                    if(getDocument.data().vip == "jandc914"){
+                    if(getDocument.data().vip === "jandc914"){
                         SetIsUserVip(true);
                     }else {
                         
@@ -113,10 +112,8 @@ const Home = ({userObj}) => {
             
         };
         try {
-            const docRef = await addDoc(collection(dbService, "NewFamcoVip"), newfamcoPosting);
-            console.log("Document written with ID: ", docRef.id);
+            await addDoc(collection(dbService, "NewFamcoVip"), newfamcoPosting);
             } catch (error) {
-            console.error("Error adding document: ", error);
             }
             
             setNewFamcoMsg("");
@@ -135,14 +132,12 @@ const Home = ({userObj}) => {
         const theFile = files[0];
         const reader = new FileReader();
         reader.onloadend = (finishedEvent) => {
-            console.log(finishedEvent);
             const {
                 currentTarget: {result},
                 } = finishedEvent;
             setAttachment(result);
         };
         SetIsAttachmentExist(true);
-        console.log(theFile.name,"this is attachmentttttttttt");
         reader.readAsDataURL(theFile);
         
     };

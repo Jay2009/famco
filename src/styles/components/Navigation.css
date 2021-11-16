@@ -1,77 +1,54 @@
 .navigation {
   z-index: 1;
   position: relative;
-}
-.navigation__homeInfo {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-
-  padding-left: 50px;
-  padding-right: 50px;
-}
-
-.navBar {
-  position: fixed;
-  background-color: #dee3eb;
-  padding: 15px 0px 30px 10px;
-}
-.logo {
-  margin-left: 30px;
-}
-.logo img {
-  width: 35px;
-  height: 35px;
-  margin-top: -2px;
-}
-
-.navigation__homeInfo li:first-child {
-  margin-left: 0px;
-  padding-right: 280px;
-}
-.navigation__homeInfo li:last-child {
-  margin-left: 240px;
-}
-
-.navigation__user {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  list-style: none;
 }
 
-.navUser {
+.navigation__position {
   position: fixed;
-  margin-top: 50px;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  background-color: #dee3eb;
+}
+
+.navigation__Icons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
 }
 
 .navuser__name {
-  margin-bottom: -100px;
-  position: fixed;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding-bottom: 10px;
 }
 
-.userIcon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
-  justify-items: center;
+.navLogo {
+  padding-right: 86px;
+  margin-top: 3px;
 }
 
-.navigation__user span {
-  display: flex;
-  justify-content: center;
+.navLogo img {
+  width: 35px;
+  height: 35px;
+}
+
+.navUser {
+  padding-right: 93px;
 }
 
 .navVip {
-  list-style: none;
-  position: fixed;
-  margin-top: 58px;
-  margin-left: 125px;
+  display: flex;
+  justify-content: center;
 }
+
 .navVip img {
-  width: 35px;
-  height: 35px;
+  width: 25px;
+  height: 25px;
   opacity: 0.5;
 }

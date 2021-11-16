@@ -20,7 +20,7 @@ const AppRouther = ({refreshUser,isLoggedIn, userObj, NewFamcoMsg}) => {
                         maxWidth: 890,
                         width: "100%",
                         margin: "0 auto",
-                        marginTop: 80,
+                        marginTop: 100,
                         display: "flex",
                         justifyContent: "center",
                         }}

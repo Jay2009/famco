@@ -95,10 +95,8 @@ const Home = ({userObj}) => {
             
         };
         try {
-            const docRef = await addDoc(collection(dbService, "NewFamcoMsg"), newfamcoPosting);
-            console.log("Document written with ID: ", docRef.id);
+            await addDoc(collection(dbService, "NewFamcoMsg"), newfamcoPosting);
             } catch (error) {
-            console.error("Error adding document: ", error);
             }
             
             setNewFamcoMsg("");
@@ -117,14 +115,12 @@ const Home = ({userObj}) => {
         const theFile = files[0];
         const reader = new FileReader();
         reader.onloadend = (finishedEvent) => {
-            console.log(finishedEvent);
             const {
                 currentTarget: {result},
                 } = finishedEvent;
             setAttachment(result);
         };
         SetIsAttachmentExist(true);
-        console.log(theFile.name,"this is attachmentttttttttt");
         reader.readAsDataURL(theFile);
         
     };

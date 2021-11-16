@@ -31,7 +31,7 @@ const Auth = ({userObj}) => {
             data = await signInWithEmailAndPassword(authService, email, password);
             
         } 
-        console.log(data);
+        
     }   catch (error) {
         setError(error.message);
     }
@@ -47,7 +47,7 @@ const onSocialClick = async(event) => {
         provider = new GoogleAuthProvider();
     }
     const data = await signInWithPopup(authService, provider);
-    console.log(data);
+    
 }
 return (
     <div className="authContainer">

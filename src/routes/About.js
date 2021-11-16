@@ -1,8 +1,5 @@
-import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus,faCode } from "@fortawesome/free-solid-svg-icons";
-import Jay from "../assets/javiorlogo.jpg";
-import kokoatalk from "../assets/kokoatalk.PNG";
 import kokoatalk2 from "../assets/kokoatalk2.PNG";
 import checkInvestingScore from "../assets/checkInvestingScore.PNG";
 

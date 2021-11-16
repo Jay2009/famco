@@ -1,13 +1,13 @@
 import { dbService } from "fbase";
 import { deleteObject, ref } from "@firebase/storage";
 import { storageService } from "../fbase";
-import { doc, deleteDoc, updateDoc, query, collection,orderBy, onSnapshot,getDocs,where } from "firebase/firestore";
-import React, { useState,useEffect, useContext} from "react";
+import { doc, deleteDoc, updateDoc } from "firebase/firestore";
+import React, { useState,useEffect} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPencilAlt, faBullhorn } from "@fortawesome/free-solid-svg-icons";
 import heartIcon1 from "../assets/heart1.png";
 import heartIcon2 from "../assets/heart2.png";
-import cuteCrown from "../assets/cuteCrown.png";
+
 
 
 
@@ -24,9 +24,7 @@ const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
     
 
     let didIlike = FamcoMsgObj.likedName.indexOf(userObj.uid);
-    //let isAdmin = false;
-    //console.log(allUsers.map( (document) => document.id ),"야야야야야야야");
-    //setUserInfo(allUsers.map( (hey) => hey.whatPostLiked )
+    
 
 
     const onDeleteClick = async () => {
@@ -63,9 +61,9 @@ const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
 
     useEffect (() => {
 
-        if(FamcoMsgObj.name == "ADMIN"){
+        if(FamcoMsgObj.name === "ADMIN"){
             setIsAdmin(true);
-            console.log(userObj.displayName,isAdmin," what is is admin now?");
+            
         }else{
             setIsLiked(false);
         }
@@ -73,7 +71,7 @@ const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
         if(alreadyLiked){
         
             if(didIlike <= 0){
-                console.log(didIlike," 라이크 없당 ");
+                
                     updateDoc(famcoTextRef, {
                         likes:  FamcoMsgObj.likes+1,
                         likedName: FamcoMsgObj.likedName +","+userObj.uid,
@@ -84,7 +82,7 @@ const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
             }
 
             if(didIlike !== -1){
-                console.log(didIlike," 라이크 이미 했내 새캬");
+                
                     if(FamcoMsgObj.likes > 0){
                         updateDoc(famcoTextRef, {
                             likes: FamcoMsgObj.likes-1,

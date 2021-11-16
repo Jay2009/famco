@@ -37,7 +37,6 @@ export default ({refreshUser,userObj}) => {
             );
             const getDocument = await getDocs(q);
             getDocument.forEach((document) => {
-                console.log(document.id, " 이건 만약 데이터 베이스중에 유저의 creatorId가 같은게 이미 존재하면 나오는것이야..");
                 firstLoginWithGoogle = true;
                 duplication = true;
             });
@@ -50,7 +49,6 @@ export default ({refreshUser,userObj}) => {
             );
             const getDocument = await getDocs(q);
             getDocument.forEach((document) => {
-                console.log(document.id, " 구글용 for Nickname) 이건 만약 데이터 베이스중에 유저의 nickname이 같은게 이미 존재하면 나오는것이야..");
                 isNicknameExist = true;
             });
     }
@@ -72,11 +70,8 @@ export default ({refreshUser,userObj}) => {
                     whatPostLiked : ""
                     }
                     try {
-                        console.log(" 구글 접속이 처음이시군요? 유저 정보를 data base에 자동 등록합니다.");
                         const docRef = await addDoc(collection(dbService, "UserInfo"),addNewGoogleUserInfoObj);
-                        console.log("Document written with ID: ", docRef.id);
                     } catch (error) {
-                    console.error("Error adding document: ", error);
                 }
             }else{ alert(" nickname is already in use.");
             setNewDisplayName("");
@@ -105,25 +100,12 @@ export default ({refreshUser,userObj}) => {
             }, []);
             
     
-   // const UserInfo = doc(dbService, "UserInfo", `${UserInfoObj.id}`);
+
     const onLogOutClick = () =>{
         authService.signOut();
         history.push("/");
     };
 
-    /*const getMyFamcoMsges = async() => {
-        const q = query(
-            collection(dbService, "NewFamcoMsg"),
-            where("creatorId", "==", userObj.uid)
-            );
-        const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-        console.log(doc.id, " => ", doc.data());
-    });
-};
-    useEffect(() => {
-        getMyFamcoMsges();
-    }, []); */
     const onChange = (event) => {
         const {
             target: { value },
@@ -133,7 +115,6 @@ export default ({refreshUser,userObj}) => {
     };
     
     const onSubmit = async(event) => {
-        console.log(NewUserInfo);
         event.preventDefault();
         if(newDisplayName.length > 2){
             
@@ -150,12 +131,9 @@ export default ({refreshUser,userObj}) => {
                     if(duplication === false){
                         await duplicationForNickname();
                         if(isNicknameExist === false){
-                        console.log("addDoc 으로 새로 추가");
                                 try { 
-                                    const docRef = await addDoc(collection(dbService, "UserInfo"),addNewUserInfoObj);
-                                    console.log("Document written with ID: ", docRef.id);
+                                    await addDoc(collection(dbService, "UserInfo"),addNewUserInfoObj);
                                     } catch (error) {
-                                    console.error("Error adding document: ", error);
                                     }
                                     await updateProfile(await authService.currentUser, {
                                         displayName: newDisplayName,
@@ -173,7 +151,6 @@ export default ({refreshUser,userObj}) => {
                             );
                             const querySnapshot = await getDocs(q);
                             querySnapshot.forEach(async(document) => {
-                                console.log(document.id, "doc 문서 id를 자동으로 찾아서 updateDoc 으로 수정");
                                 await updateDoc(doc(dbService, "UserInfo", `${document.id}`), {
                                 name: newDisplayName,
                                 });
@@ -197,8 +174,8 @@ export default ({refreshUser,userObj}) => {
     };
 
     return (
-        <div className="container__profile">
-            <form onSubmit={onSubmit} className= "profileForm">
+        <div className="container">
+            
                 <input
                     onChange={onChange}
                     type="text"
@@ -210,11 +187,12 @@ export default ({refreshUser,userObj}) => {
                     className="profileFormInput"
                 />
                 <input 
-                    type="submit" 
+                    type="submit"
+                    onClick={onSubmit}
                     value="Update name" 
                     className="profileFormBtn"
                 />
-                </form>
+                
                 <span className="profileFormBtn cancelBtn logOut" onClick={onLogOutClick}>
                     Log Out
                 </span>

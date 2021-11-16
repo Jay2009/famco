@@ -1,31 +1,15 @@
-.container__profile {
-  width: 100%;
-  max-width: 320px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
 .profileForm {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.9);
-  padding-bottom: 30px;
-  width: 100%;
-  max-width: 320px;
-}
-
-.container profile {
-  margin-right: 40px;
 }
 
 .logOut {
   margin-top: 50px;
-  margin-bottom: 700px;
+  margin-bottom: 820px;
 }
 
 .profileFormInput {
-  width: 320px;
-  padding: 10px 20px;
+  width: 80%;
+  padding-top: 8px;
+  padding-bottom: 8px;
   border-radius: 20px;
   border: 1px solid black;
   text-align: center;
@@ -36,8 +20,9 @@
 
 .profileFormBtn {
   cursor: pointer;
-  width: 320px;
-  padding: 7px 20px;
+  width: 80%;
+  padding-top: 6px;
+  padding-bottom: 6px;
   text-align: center;
   color: white;
   border-radius: 20px;

@@ -1,8 +1,8 @@
 import { dbService } from "fbase";
 import { deleteObject, ref } from "@firebase/storage";
 import { storageService } from "../fbase";
-import { doc, deleteDoc, updateDoc, query, collection,orderBy, onSnapshot,getDocs,where } from "firebase/firestore";
-import React, { useState,useEffect, useContext} from "react";
+import { doc, deleteDoc, updateDoc } from "firebase/firestore";
+import React, { useState,useEffect} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 import heartIcon1 from "../assets/heart1.png";
@@ -11,22 +11,15 @@ import cuteCrown from "../assets/cuteCrown.png";
 
 
 
-
 const FamcoVip = ({FamcoVipObj, isOwner, userObj}) => {
     const [editing, setEditing] = useState(false);
     const [NewFamcoMsg, setNewFamcoMsg] = useState(FamcoVipObj.text);
     const famcoTextRef = doc(dbService, "NewFamcoVip", `${FamcoVipObj.id}`) ;
-    
-    
     const [isLiked, setIsLiked] = useState(false);
     const [alreadyLiked, setAlreadyLiked] = useState(false);
-    const [userInfo, setUserInfo] = useState("");
     
-
     let didIlike = FamcoVipObj.likedName.indexOf(userObj.uid);
     
-    //console.log(allUsers.map( (document) => document.id ),"야야야야야야야");
-    //setUserInfo(allUsers.map( (hey) => hey.whatPostLiked )
 
 
     const onDeleteClick = async () => {
@@ -66,7 +59,6 @@ const FamcoVip = ({FamcoVipObj, isOwner, userObj}) => {
         if(alreadyLiked){
         
             if(didIlike <= 0){
-                console.log(didIlike," 라이크 없당 ");
                     updateDoc(famcoTextRef, {
                         likes:  FamcoVipObj.likes+1,
                         likedName: FamcoVipObj.likedName +","+userObj.uid,
@@ -77,7 +69,6 @@ const FamcoVip = ({FamcoVipObj, isOwner, userObj}) => {
             }
 
             if(didIlike !== -1){
-                console.log(didIlike," 라이크 이미 했내 새캬");
                     if(FamcoVipObj.likes > 0){
                         updateDoc(famcoTextRef, {
                             likes: FamcoVipObj.likes-1,
