@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/famco/static/css/main.b0ee5f00.chunk.css",
+    "main.css": "/famco/static/css/main.2f6a4f7f.chunk.css",
     "main.js": "/famco/static/js/main.6f6ace7f.chunk.js",
     "main.js.map": "/famco/static/js/main.6f6ace7f.chunk.js.map",
     "runtime-main.js": "/famco/static/js/runtime-main.d269a909.js",
@@ -8,7 +8,7 @@
     "static/js/2.5005f9df.chunk.js": "/famco/static/js/2.5005f9df.chunk.js",
     "static/js/2.5005f9df.chunk.js.map": "/famco/static/js/2.5005f9df.chunk.js.map",
     "index.html": "/famco/index.html",
-    "static/css/main.b0ee5f00.chunk.css.map": "/famco/static/css/main.b0ee5f00.chunk.css.map",
+    "static/css/main.2f6a4f7f.chunk.css.map": "/famco/static/css/main.2f6a4f7f.chunk.css.map",
     "static/js/2.5005f9df.chunk.js.LICENSE.txt": "/famco/static/js/2.5005f9df.chunk.js.LICENSE.txt",
     "static/media/FAMCO.79983dba.png": "/famco/static/media/FAMCO.79983dba.png",
     "static/media/checkInvestingScore.52797942.PNG": "/famco/static/media/checkInvestingScore.52797942.PNG",
@@ -24,7 +24,7 @@
   "entrypoints": [
     "static/js/runtime-main.d269a909.js",
     "static/js/2.5005f9df.chunk.js",
-    "static/css/main.b0ee5f00.chunk.css",
+    "static/css/main.2f6a4f7f.chunk.css",
     "static/js/main.6f6ace7f.chunk.js"
   ]
 }
