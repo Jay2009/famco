@@ -15,6 +15,7 @@ const Home = ({userObj}) => {
     const [isAttachmentExist, SetIsAttachmentExist] = useState(false);
     const [isUserInfoExist, SetIsUserInfoExist] = useState(false);
     const [isUserVip, SetIsUserVip] = useState(false);
+    const [isLoading, setIsLoading] = useState(false); 
 
     const date = new Date();
     const year = String(date.getFullYear());
@@ -91,6 +92,7 @@ const Home = ({userObj}) => {
             }, []);
 
     const onSubmit = async(event) => {       
+        setIsLoading(true);
         event.preventDefault();
         let attachmentUrl = "";
         if(attachment !== ""){
@@ -113,6 +115,7 @@ const Home = ({userObj}) => {
         };
         try {
             await addDoc(collection(dbService, "NewFamcoVip"), newfamcoPosting);
+            setIsLoading(false);
             } catch (error) {
             }
             
@@ -168,11 +171,16 @@ const Home = ({userObj}) => {
                 maxLength="120" 
                 required
             />
-            <input 
-            type="submit" 
-            value="Post" 
-            className="famcoMsgInput__post"
-            />
+
+            {isLoading ? ( 
+                <div className="loading"></div>
+            ) : (
+                <input 
+                    type="submit" 
+                    value="Post" 
+                    className="famcoMsgInput__post"
+                />
+            )}
             {isAttachmentExist ? (
                 <></>
             ) : (
