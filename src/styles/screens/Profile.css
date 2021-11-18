@@ -1,11 +1,6 @@
 .profileForm {
 }
 
-.logOut {
-  margin-top: 50px;
-  margin-bottom: 820px;
-}
-
 .profileFormInput {
   width: 80%;
   padding-top: 8px;
@@ -20,9 +15,10 @@
 
 .profileFormBtn {
   cursor: pointer;
-  width: 80%;
-  padding-top: 6px;
-  padding-bottom: 6px;
+  width: 40%;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  margin-top: 10px;
   text-align: center;
   color: white;
   border-radius: 20px;
@@ -30,8 +26,15 @@
   cursor: pointer;
 }
 
+.nameUpdateBtn {
+  margin-bottom: 100px;
+}
+
 .profilecancelBtn {
   cursor: pointer;
-  width: 150px;
-  background-color: rgb(243, 102, 77);
+}
+
+.logOut {
+  margin-top: 50px;
+  margin-bottom: 820px;
 }

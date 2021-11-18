@@ -1,9 +1,10 @@
 import { authService } from "fbase";
 import React, { useState } from "react";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, getAuth } from 'firebase/auth';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import FAMCO from "../assets/FAMCO.png";
+
 
 const Auth = ({userObj}) => {    
     const [email, setEmail] = useState("");
@@ -21,10 +22,11 @@ const Auth = ({userObj}) => {
         }
         
     };
+    let data;
     const onSubmit = async(event) => {
         event.preventDefault();
         try {
-            let data;
+            
         if(newAccount){
             data = await createUserWithEmailAndPassword(authService, email, password) ;
         } else {
@@ -38,17 +40,24 @@ const Auth = ({userObj}) => {
     };
 
 const toggleAccount = () => setNewAccount((prev) => !prev);
-const onSocialClick = async(event) => {
+const onSocialClick = async (event) => {
     const {
-        target: {name},
-    } = event;
+    target: { name }} = event;
     let provider;
-    if(name === "google"){
-        provider = new GoogleAuthProvider();
-    }
-    const data = await signInWithPopup(authService, provider);
+    try {
+        
+    if (name === "google") {
+        
+    provider = new GoogleAuthProvider();
+    const result = await signInWithPopup(authService, provider);
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    // const token = credential.accessToken;
+    } 
+    } catch (error) {
+    console.log(error);
     
-}
+    }
+    };
 return (
     <div className="authContainer">
         <img src={FAMCO}
@@ -84,9 +93,8 @@ return (
         {newAccount? "Sign in" : "Create Account"}
     </span>
     <div className="authBtns">
-        <button onClick={onSocialClick} name="google" className="authBtn">
-            <span className="authBtn__span">Continue with Google</span> 
-            <FontAwesomeIcon icon={faGoogle} className="google" />
+        <button type="button" onClick={onSocialClick} name="google" className="authBtn authBtn__span">
+            Continue with Google
         </button>
     </div>
 </div>

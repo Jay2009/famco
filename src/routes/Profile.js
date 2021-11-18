@@ -189,8 +189,8 @@ export default ({refreshUser,userObj}) => {
                 <input 
                     type="submit"
                     onClick={onSubmit}
-                    value="Update name" 
-                    className="profileFormBtn"
+                    value="Update" 
+                    className="profileFormBtn nameUpdateBtn"
                 />
                 
                 <span className="profileFormBtn cancelBtn logOut" onClick={onLogOutClick}>

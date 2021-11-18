@@ -145,6 +145,12 @@ const FamcoVip = ({FamcoVipObj, isOwner, userObj}) => {
                             </span>
                         </div>
                         )}
+                        
+                    {userObj.displayName == "ADMIN" && (
+                            <span className="famcoMsg__actions superDelete" onClick={onDeleteClick}>
+                                <FontAwesomeIcon icon={faTrash} />
+                            </span>  
+                        )}    
                 </>
             )}
         </div>

@@ -53,33 +53,13 @@
 
 .authBtn {
   cursor: pointer;
-  border-radius: 15px;
+  border-radius: 20px;
   border: none;
   padding: 5px 0px;
   font-size: 12px;
   text-align: center;
-  width: 150px;
-  cursor: pointer;
+  width: 140px;
   font-weight: bold;
-  background: none;
-}
-
-.authBtn__span {
-  background: linear-gradient(
-    to right,
-    rgb(247, 27, 45),
-    rgb(252, 207, 70),
-    rgb(6, 173, 34),
-    rgb(44, 116, 224),
-    rgb(247, 27, 45)
-  );
-  appearance: none;
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.google {
-  color: tomato;
+  background: rgb(241, 143, 143);
+  color: rgb(250, 229, 229);
 }

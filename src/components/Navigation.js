@@ -44,7 +44,6 @@ const Navigation = ({userObj}) => {
 useEffect (() => { 
         
     checkVip();
- 
         
         }, []);
 

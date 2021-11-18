@@ -57,7 +57,7 @@
 }
 
 .famcoMsg__actions span:first-child {
-  margin-right: 10px;
+  margin-right: 18px;
 }
 
 .famcoAdmin {
@@ -228,4 +228,8 @@
   height: 13px;
   color: #fe1a1a;
   opacity: 0.6;
+}
+
+.superDelete {
+  cursor: pointer;
 }
