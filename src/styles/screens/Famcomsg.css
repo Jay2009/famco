@@ -49,7 +49,7 @@
 .famcoMsg__actions {
   position: absolute;
   right: 25px;
-  bottom: 14px;
+  bottom: 29px;
 }
 
 .famcoMsg__actions span {
@@ -72,12 +72,10 @@
 .famcoOwner {
   color: #385498;
   font-weight: bold;
-  margin-top: 43px;
 }
 .famcoOtherOwners {
   font-weight: bold;
   color: #04aaff;
-  margin-top: 40px;
 }
 
 .famcoMsgInput__input {
@@ -219,6 +217,13 @@
 }
 .FamcoMsgLikes :last-child {
   top: 30px;
+}
+
+.FamcoComments {
+  margin-left: -170px;
+  margin-top: 43px;
+  cursor: pointer;
+  color: rgb(146, 140, 140);
 }
 
 .megaphone {

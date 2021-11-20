@@ -4,9 +4,15 @@ import { storageService } from "../fbase";
 import { doc, deleteDoc, updateDoc } from "firebase/firestore";
 import React, { useState,useEffect} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faPencilAlt, faBullhorn } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faPencilAlt, faBullhorn, faCommentDots, } from "@fortawesome/free-solid-svg-icons";
+import { library } from '@fortawesome/fontawesome-svg-core'
+
+import {faCommentDots as emptyComments } from '@fortawesome/free-regular-svg-icons'
 import heartIcon1 from "../assets/heart1.png";
 import heartIcon2 from "../assets/heart2.png";
+
+
+
 
 
 
@@ -21,6 +27,7 @@ const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
     
     const [isLiked, setIsLiked] = useState(false);
     const [alreadyLiked, setAlreadyLiked] = useState(false);
+    const [openComment, SetOpenComment] = useState(false);
     
 
     let didIlike = FamcoMsgObj.likedName.indexOf(userObj.uid);
@@ -99,6 +106,8 @@ const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
         setAlreadyLiked(true);
         setIsLiked((prev) => !prev);
     }
+
+    const toggleComment = () => SetOpenComment((prev) => !prev);
     
     return(
         <div className="famcoMsg">
@@ -140,14 +149,20 @@ const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
                             onClick={toggleLike}
                         /> 
                         <span>{FamcoMsgObj.likes}</span>
-                    </div>    
-                    
+                    </div>
+                    {openComment ?(    
+                        <FontAwesomeIcon onClick={toggleComment} icon={faCommentDots }  className="FamcoComments"/>
+                        ) : (
+                        <FontAwesomeIcon onClick={toggleComment} icon={emptyComments } className="FamcoComments" /> 
+                        )
+                    }
                     {isOwner ?(
                         <h5 className="famcoOwner"> {userObj.displayName}</h5>
                         ) : (
                         <h5 className="famcoOtherOwners"> {FamcoMsgObj.name}</h5>       
                         )
                     }
+
                     {isAdmin? <FontAwesomeIcon icon={faBullhorn}  className="megaphone" /> : <> </> }
                     {isOwner && (
                         <div className="famcoMsg__actions"> 
