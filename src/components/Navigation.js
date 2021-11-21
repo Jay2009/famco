@@ -87,15 +87,14 @@ return (
     </ul>
 
 
-        <div className="navuser__name" >
-            <span className="displayUserName">
+            <span className="displayUserName" >
             {userObj.displayName
-                ? `${userObj.displayName}`
-                : "Profile"}
+                ? ( <span class="notranslate"> {userObj.displayName}</span>)
+                : ("Profile")}
             </span>
 
             
-        </div>
+        
 
         {isUserVip ? (
         <li className="navVip">

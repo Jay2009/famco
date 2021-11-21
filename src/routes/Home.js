@@ -5,7 +5,7 @@ import { addDoc, collection, getDocs, query, onSnapshot, orderBy, where, } from 
 import {ref, uploadString, getDownloadURL} from "@firebase/storage";
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faTimes, faHandPointUp } from "@fortawesome/free-solid-svg-icons";
 
 
 const Home = ({userObj}) => {
@@ -182,7 +182,10 @@ const Home = ({userObj}) => {
 
             </>
             ):(
-                <div className="noUserName">Add infomation on your profile to start</div>
+                <div className= "noUserName">
+                    <FontAwesomeIcon className="noUserName__icon" icon={faHandPointUp} size={"2x"}/>
+                    <span className="noUserName__span">Add infomation on your profile to start</span>
+                </div>
             )}
             {attachment && (
             <div className="famcoMsgForm__attachment">
@@ -204,6 +207,7 @@ const Home = ({userObj}) => {
                 FamcoMsgObj={NewFamcoMsg} 
                 isOwner={NewFamcoMsg.creatorId === userObj.uid}
                 userObj={userObj}
+                isUserInfoExist={isUserInfoExist}
                 />
             ))}
         </div>

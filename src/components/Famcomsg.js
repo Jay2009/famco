@@ -6,19 +6,12 @@ import React, { useState,useEffect} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPencilAlt, faBullhorn, faCommentDots, } from "@fortawesome/free-solid-svg-icons";
 import { library } from '@fortawesome/fontawesome-svg-core'
-
 import {faCommentDots as emptyComments } from '@fortawesome/free-regular-svg-icons'
 import heartIcon1 from "../assets/heart1.png";
 import heartIcon2 from "../assets/heart2.png";
 
 
-
-
-
-
-
-
-const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
+const Famco = ({FamcoMsgObj, isOwner, userObj, isUserInfoExist}) => {
     const [editing, setEditing] = useState(false);
     const [NewFamcoMsg, setNewFamcoMsg] = useState(FamcoMsgObj.text);
     const famcoTextRef = doc(dbService, "NewFamcoMsg", `${FamcoMsgObj.id}`) ;
@@ -32,8 +25,7 @@ const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
 
     let didIlike = FamcoMsgObj.likedName.indexOf(userObj.uid);
     
-
-
+    
     const onDeleteClick = async () => {
         const ok= window.confirm("Are you sure you want to delete the famco message?");
         
@@ -68,6 +60,8 @@ const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
 
     useEffect (() => {
 
+        const locale = navigator.language;
+        console.log(locale," what language is it now?");
         if(FamcoMsgObj.name === "ADMIN"){
             setIsAdmin(true);
             
@@ -141,14 +135,16 @@ const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
                     {FamcoMsgObj.attachmentUrl && <img src={FamcoMsgObj.attachmentUrl} className="famcoAttachedImg"/>}
                         
                     </h4>
-                    {FamcoMsgObj.text}
+                    <span class= "notranslate" >{FamcoMsgObj.text}</span>
                     <br/>
                     <br/>
+                {isUserInfoExist ? (
+                    <>
                     <div className="FamcoMsgLikes">
                         <img src={didIlike !== -1 ?heartIcon2:heartIcon1} 
                             onClick={toggleLike}
                         /> 
-                        <span>{FamcoMsgObj.likes}</span>
+                        <span class= "notranslate">{FamcoMsgObj.likes}</span>
                     </div>
                     {openComment ?(    
                         <FontAwesomeIcon onClick={toggleComment} icon={faCommentDots }  className="FamcoComments"/>
@@ -156,10 +152,18 @@ const Famco = ({FamcoMsgObj, isOwner, userObj}) => {
                         <FontAwesomeIcon onClick={toggleComment} icon={emptyComments } className="FamcoComments" /> 
                         )
                     }
+                    </>
+                ) : ( <> </>)
+                }
+
                     {isOwner ?(
-                        <h5 className="famcoOwner"> {userObj.displayName}</h5>
+                            <span class= "notranslate">
+                                <h5 className="famcoOwner"> {userObj.displayName}</h5>
+                            </span>
                         ) : (
-                        <h5 className="famcoOtherOwners"> {FamcoMsgObj.name}</h5>       
+                            <span class= "notranslate">
+                                <h5 className="famcoOtherOwners"> {FamcoMsgObj.name}</h5>  
+                            </span>     
                         )
                     }
 

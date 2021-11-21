@@ -13,6 +13,11 @@
   color: black;
 }
 
+.onlyEnglish {
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
 .profileFormBtn {
   cursor: pointer;
   width: 40%;
@@ -28,10 +33,6 @@
 
 .nameUpdateBtn {
   margin-bottom: 100px;
-}
-
-.profilecancelBtn {
-  cursor: pointer;
 }
 
 .logOut {

@@ -110,7 +110,7 @@ export default ({refreshUser,userObj}) => {
         const {
             target: { value },
         } = event;
-        setNewDisplayName(value.trim());
+        setNewDisplayName(value.trim().replace(/[^A-Za-z]/ig, ''));
         
     };
     
@@ -138,6 +138,7 @@ export default ({refreshUser,userObj}) => {
                                     await updateProfile(await authService.currentUser, {
                                         displayName: newDisplayName,
                                     });
+                                    alert("Update success !");
                         }else{
                             alert("Nick name is already in use");
                             setNewDisplayName("");
@@ -175,7 +176,10 @@ export default ({refreshUser,userObj}) => {
 
     return (
         <div className="container">
-            
+
+                <span className= "onlyEnglish">
+                    Please, write your name only in English
+                </span>
                 <input
                     onChange={onChange}
                     type="text"
@@ -185,13 +189,13 @@ export default ({refreshUser,userObj}) => {
                     required
                     autoFocus
                     className="profileFormInput"
+                    
+                    
                 />
-                <input 
-                    type="submit"
-                    onClick={onSubmit}
-                    value="Update" 
-                    className="profileFormBtn nameUpdateBtn"
-                />
+                <span onClick={onSubmit} className="profileFormBtn nameUpdateBtn" >
+                    Update 
+                    
+                </span>
                 
                 <span className="profileFormBtn cancelBtn logOut" onClick={onLogOutClick}>
                     Log Out
