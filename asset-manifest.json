@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/famco/static/css/main.b91cef6c.chunk.css",
-    "main.js": "/famco/static/js/main.20d9e5a6.chunk.js",
-    "main.js.map": "/famco/static/js/main.20d9e5a6.chunk.js.map",
+    "main.css": "/famco/static/css/main.f15fab6c.chunk.css",
+    "main.js": "/famco/static/js/main.3ecaaaa4.chunk.js",
+    "main.js.map": "/famco/static/js/main.3ecaaaa4.chunk.js.map",
     "runtime-main.js": "/famco/static/js/runtime-main.d269a909.js",
     "runtime-main.js.map": "/famco/static/js/runtime-main.d269a909.js.map",
-    "static/js/2.3fac0c7d.chunk.js": "/famco/static/js/2.3fac0c7d.chunk.js",
-    "static/js/2.3fac0c7d.chunk.js.map": "/famco/static/js/2.3fac0c7d.chunk.js.map",
+    "static/js/2.ffe3242c.chunk.js": "/famco/static/js/2.ffe3242c.chunk.js",
+    "static/js/2.ffe3242c.chunk.js.map": "/famco/static/js/2.ffe3242c.chunk.js.map",
     "index.html": "/famco/index.html",
-    "static/css/main.b91cef6c.chunk.css.map": "/famco/static/css/main.b91cef6c.chunk.css.map",
-    "static/js/2.3fac0c7d.chunk.js.LICENSE.txt": "/famco/static/js/2.3fac0c7d.chunk.js.LICENSE.txt",
+    "static/css/main.f15fab6c.chunk.css.map": "/famco/static/css/main.f15fab6c.chunk.css.map",
+    "static/js/2.ffe3242c.chunk.js.LICENSE.txt": "/famco/static/js/2.ffe3242c.chunk.js.LICENSE.txt",
     "static/media/FAMCO.79983dba.png": "/famco/static/media/FAMCO.79983dba.png",
     "static/media/checkInvestingScore.52797942.PNG": "/famco/static/media/checkInvestingScore.52797942.PNG",
     "static/media/cuteCrown.8d0b09b9.png": "/famco/static/media/cuteCrown.8d0b09b9.png",
@@ -19,8 +19,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.d269a909.js",
-    "static/js/2.3fac0c7d.chunk.js",
-    "static/css/main.b91cef6c.chunk.css",
-    "static/js/main.20d9e5a6.chunk.js"
+    "static/js/2.ffe3242c.chunk.js",
+    "static/css/main.f15fab6c.chunk.css",
+    "static/js/main.3ecaaaa4.chunk.js"
   ]
 }
