@@ -24,6 +24,7 @@ const Home = ({userObj}) => {
     const minutes = String(date.getMinutes()).padStart(2, "0");
     //const sec = String(date.getSeconds()).padStart(2,"0");
 
+
     const getNewFamcoMsges = async() => {
     const DbNewFamcoMsges = query(collection(dbService,"NewFamcoMsg"));
     const querySnapshot = await getDocs(DbNewFamcoMsges);
@@ -57,7 +58,7 @@ const Home = ({userObj}) => {
     
 
     useEffect (() => { 
-        
+
         checkUserInfo();
         const q = query(
             collection(dbService, "NewFamcoMsg"),
@@ -92,6 +93,7 @@ const Home = ({userObj}) => {
             uploadedDate:  year +"/"+ month +"/"+ day +" At "+ hours +" : "+ minutes,
             likes: 0,
             likedName: "",
+            comments:{},
             attachmentUrl
             
         };

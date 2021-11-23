@@ -1,0 +1,37 @@
+.commentForm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.comment__input {
+  border-radius: 5px;
+  height: 30px;
+  width: 100%;
+  max-width: 250px;
+  max-height: 30px;
+  min-width: 250px;
+  min-height: 30px;
+}
+
+.comment__input:focus {
+  outline-color: #04aaff;
+}
+.comment__input::placeholder {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  opacity: 0.7;
+}
+
+.commentAdd {
+  width: 40px;
+  margin-left: 5px;
+  cursor: pointer;
+  padding: 7px 0px;
+  text-align: center;
+  font-size: 13px;
+  color: white;
+  border-radius: 7px;
+  background-color: #04aaff;
+  cursor: pointer;
+}

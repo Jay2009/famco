@@ -1,6 +1,6 @@
 .famcoMsg-input::placeholder {
   color: white;
-  opacity: 0.9;
+  opacity: 0.7;
 }
 .famcoMsgInput {
   width: 270px;
@@ -47,9 +47,8 @@
 }
 
 .famcoMsg__actions {
-  position: absolute;
-  right: 25px;
-  bottom: 29px;
+  margin-right: -250px;
+  margin-bottom: -15px;
 }
 
 .famcoMsg__actions span {
@@ -237,4 +236,5 @@
 
 .superDelete {
   cursor: pointer;
+  margin-left: 32px;
 }

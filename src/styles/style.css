@@ -3,9 +3,7 @@
 /* component */
 @import "components/Navigation.css";
 @import "components/Loading.css";
-
-/* screebs */
-
+@import "components/Comments.css"; /* screebs */
 @import "screens/Auth.css";
 @import "screens/Famcomsg.css";
 @import "screens/Profile.css";

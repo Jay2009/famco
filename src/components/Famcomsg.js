@@ -1,7 +1,7 @@
 import { dbService } from "fbase";
 import { deleteObject, ref } from "@firebase/storage";
 import { storageService } from "../fbase";
-import { doc, deleteDoc, updateDoc } from "firebase/firestore";
+import { doc, deleteDoc, updateDoc, collection, getDocs, query, onSnapshot, orderBy, where, } from "firebase/firestore";
 import React, { useState,useEffect} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPencilAlt, faBullhorn, faCommentDots, } from "@fortawesome/free-solid-svg-icons";
@@ -9,6 +9,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import {faCommentDots as emptyComments } from '@fortawesome/free-regular-svg-icons'
 import heartIcon1 from "../assets/heart1.png";
 import heartIcon2 from "../assets/heart2.png";
+import Comments from "routes/Comments";
 
 
 const Famco = ({FamcoMsgObj, isOwner, userObj, isUserInfoExist}) => {
@@ -16,14 +17,29 @@ const Famco = ({FamcoMsgObj, isOwner, userObj, isUserInfoExist}) => {
     const [NewFamcoMsg, setNewFamcoMsg] = useState(FamcoMsgObj.text);
     const famcoTextRef = doc(dbService, "NewFamcoMsg", `${FamcoMsgObj.id}`) ;
     const [isAdmin, setIsAdmin] = useState(false);
-    
-    
     const [isLiked, setIsLiked] = useState(false);
     const [alreadyLiked, setAlreadyLiked] = useState(false);
     const [openComment, SetOpenComment] = useState(false);
     
-
     let didIlike = FamcoMsgObj.likedName.indexOf(userObj.uid);
+
+    const [newComment, SetNewComment] = useState([]);
+    // const getNewComments = async() => {
+    //     const q = query(
+    //         collection(dbService, "NewFamcoMsg")
+    //         );
+            
+    //         const querySnapshot = await getDocs(q);
+    //         querySnapshot.forEach((doc) => {
+    //             const newCommentObj = {
+    //                 ...doc.data(),
+    //                 id: doc.id,  
+    //             }
+    //             console.log(newCommentObj,"whats the data I get from query");
+    //             SetNewComment((prev) => [newCommentObj, ...prev]);
+    //         });
+    //     };
+
     
     
     const onDeleteClick = async () => {
@@ -47,7 +63,7 @@ const Famco = ({FamcoMsgObj, isOwner, userObj, isUserInfoExist}) => {
     };
 
     const onChange = (event) => {
-        
+        //console.log(newComment,"@@@@@@@@@@");
         const {
             target: {value},
         } = event;
@@ -59,9 +75,11 @@ const Famco = ({FamcoMsgObj, isOwner, userObj, isUserInfoExist}) => {
     
 
     useEffect (() => {
+        //getNewComments();
+            
 
         const locale = navigator.language;
-        console.log(locale," what language is it now?");
+       // console.log(locale," what language is it now?");
         if(FamcoMsgObj.name === "ADMIN"){
             setIsAdmin(true);
             
@@ -137,24 +155,8 @@ const Famco = ({FamcoMsgObj, isOwner, userObj, isUserInfoExist}) => {
                     </h4>
                     <span class= "notranslate" >{FamcoMsgObj.text}</span>
                     <br/>
-                    <br/>
-                {isUserInfoExist ? (
-                    <>
-                    <div className="FamcoMsgLikes">
-                        <img src={didIlike !== -1 ?heartIcon2:heartIcon1} 
-                            onClick={toggleLike}
-                        /> 
-                        <span class= "notranslate">{FamcoMsgObj.likes}</span>
-                    </div>
-                    {openComment ?(    
-                        <FontAwesomeIcon onClick={toggleComment} icon={faCommentDots }  className="FamcoComments"/>
-                        ) : (
-                        <FontAwesomeIcon onClick={toggleComment} icon={emptyComments } className="FamcoComments" /> 
-                        )
-                    }
-                    </>
-                ) : ( <> </>)
-                }
+                    
+                
 
                     {isOwner ?(
                             <span class= "notranslate">
@@ -166,9 +168,13 @@ const Famco = ({FamcoMsgObj, isOwner, userObj, isUserInfoExist}) => {
                             </span>     
                         )
                     }
-
-                    {isAdmin? <FontAwesomeIcon icon={faBullhorn}  className="megaphone" /> : <> </> }
-                    {isOwner && (
+                    {userObj.displayName == "ADMIN" && (
+                            <span className="famcoMsg__actions superDelete" onClick={onDeleteClick}>
+                                <FontAwesomeIcon icon={faTrash} />
+                            </span>  
+                        )}
+                        {isAdmin? <FontAwesomeIcon icon={faBullhorn}  className="megaphone" /> : <> </> }
+                        {isOwner && (
                         <div className="famcoMsg__actions"> 
                             <span onClick={toggleEditing}>
                                 <FontAwesomeIcon icon={faPencilAlt} />
@@ -178,11 +184,44 @@ const Famco = ({FamcoMsgObj, isOwner, userObj, isUserInfoExist}) => {
                             </span>                            
                         </div>
                         )}
-                    {userObj.displayName == "ADMIN" && (
-                            <span className="famcoMsg__actions superDelete" onClick={onDeleteClick}>
-                                <FontAwesomeIcon icon={faTrash} />
-                            </span>  
-                        )}
+                        
+
+                    {isUserInfoExist ? (
+                        <>
+                        <div className="FamcoMsgLikes">
+                            <img src={didIlike !== -1 ?heartIcon2:heartIcon1} 
+                                onClick={toggleLike}
+                            /> 
+                            <span class= "notranslate">{FamcoMsgObj.likes}</span>
+                        </div>
+                        {openComment ?(
+                            <> 
+                            <FontAwesomeIcon onClick={toggleComment} icon={faCommentDots }  className="FamcoComments"/>
+                            <div style={{ marginTop: 30 }}>     
+                                
+                                    <Comments 
+                                    key={NewFamcoMsg.id} 
+                                    famcoMsgId= {FamcoMsgObj.id}
+                                    userObj={userObj}
+                                    // isOwner={NewFamcoMsg.creatorId === userObj.uid}
+                                    // userObj={userObj}
+                                    // isUserInfoExist={isUserInfoExist}
+                                    />
+                                
+                            </div>
+                        </>
+                            ) : (
+                            <FontAwesomeIcon onClick={toggleComment} icon={emptyComments } className="FamcoComments" /> 
+                            )
+                        }
+                        </>
+                    ) : ( <> </>)
+                    }
+                    
+                    
+                    
+                    
+                    
                 </>
             )}
         </div>
