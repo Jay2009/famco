@@ -119,7 +119,7 @@ const Comments = ({famcoMsgId, isOwner, userObj,FamcoMsgObj }) => {
                         placeholder="Write a comment" 
                         maxLength="71" 
                         required 
-                        autoFocus
+                        
                         >
                     </textarea>
                     <input type="submit" value="Add"  className="commentAdd" />

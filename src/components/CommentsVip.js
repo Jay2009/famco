@@ -60,7 +60,6 @@ const CommentsVip = ({famcoMsgId, userObj,FamcoVipObj }) => {
                 const unsub = onSnapshot(doc(dbService, "NewFamcoVip", `${famcoMsgId}`), (doc) => {
                     if(doc.data()){
                         setAllComments(doc.data().comments);
-                       
                     }
                 });
             },
@@ -74,7 +73,6 @@ const CommentsVip = ({famcoMsgId, userObj,FamcoVipObj }) => {
                     const unsub = onSnapshot(doc(dbService, "NewFamcoVip", `${famcoMsgId}`), (doc) => {
                         if(doc.data()){
                             setCurrentDate(doc.data().commentTime);
-                            
                         }
                     });
                 },
@@ -119,7 +117,7 @@ const CommentsVip = ({famcoMsgId, userObj,FamcoVipObj }) => {
                         placeholder="Write a comment" 
                         maxLength="71" 
                         required 
-                        autoFocus
+                        
                         >
                     </textarea>
                     <input type="submit" value="Add"  className="commentAdd" />
