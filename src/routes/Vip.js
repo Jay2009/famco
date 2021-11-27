@@ -110,6 +110,9 @@ const Home = ({userObj}) => {
             uploadedDate:  year +"/"+ month +"/"+ day +" At "+ hours +" : "+ minutes,
             likes: 0,
             likedName: "",
+            commentsNumber:0,
+            comments:[],
+            commentTime:[],
             attachmentUrl
             
         };

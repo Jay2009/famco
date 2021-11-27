@@ -59,6 +59,8 @@ const Home = ({userObj}) => {
 
     useEffect (() => { 
 
+        
+
         checkUserInfo();
         const q = query(
             collection(dbService, "NewFamcoMsg"),
@@ -71,6 +73,8 @@ const Home = ({userObj}) => {
             }));
             setNewFamcoMsges(famcoArr);
             });
+
+            
             
             }, []);
 
@@ -80,7 +84,6 @@ const Home = ({userObj}) => {
         let attachmentUrl = "";
         if(attachment !== ""){
         const attachmentRef = ref(storageService, `${userObj.uid}/${uuidv4()}`);
-        // 여기에 업로드 어태치먼트가 이상해서그랭
         const uploadFile = await uploadString(attachmentRef, attachment, "data_url");
         attachmentUrl = await getDownloadURL(uploadFile.ref);
         
@@ -93,7 +96,9 @@ const Home = ({userObj}) => {
             uploadedDate:  year +"/"+ month +"/"+ day +" At "+ hours +" : "+ minutes,
             likes: 0,
             likedName: "",
-            comments:{},
+            commentsNumber:0,
+            comments:[],
+            commentTime:[],
             attachmentUrl
             
         };

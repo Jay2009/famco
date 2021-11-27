@@ -1,18 +1,18 @@
 import { dbService } from "fbase";
 import { doc, updateDoc, collection, onSnapshot,arrayUnion} from "firebase/firestore";
 import React, { useState,useEffect} from "react";
-import SingleComment from "components/SingleComment";
-import CommentTime from "components/CommentTime";
+import SingleCommentVip from "components/SingleComment";
+import CommentTimeVip from "components/CommentTimeVip";
 
 
 
-const Comments = ({famcoMsgId, isOwner, userObj,FamcoMsgObj }) => {
+const CommentsVip = ({famcoMsgId, userObj,FamcoVipObj }) => {
 
     const [NewComment, setNewComment] = useState("");
     const [allComments, setAllComments] = useState([]);
     const [secreatKey, setSecreatKey] = useState(0);
     const [currentDate, setCurrentDate] = useState("");
-    const commentRef = doc(dbService, "NewFamcoMsg", `${famcoMsgId}`) ;
+    const commentRef = doc(dbService, "NewFamcoVip", `${famcoMsgId}`) ;
 
     const date = new Date();
     const year = String(date.getFullYear());
@@ -41,7 +41,7 @@ const Comments = ({famcoMsgId, isOwner, userObj,FamcoMsgObj }) => {
         setSecreatKey(( Math.random() * (10 - 1) + 1 ));
         
         await updateDoc(commentRef,  {
-            commentsNumber : FamcoMsgObj.commentsNumber+1,
+            commentsNumber : FamcoVipObj.commentsNumber+1,
         });
         setNewComment("");
 
@@ -55,11 +55,12 @@ const Comments = ({famcoMsgId, isOwner, userObj,FamcoMsgObj }) => {
 
     useEffect (() => { 
 
-            const snapshotCommanderComment =  onSnapshot(collection(dbService, "NewFamcoMsg"), 
+            const snapshotCommanderComment =  onSnapshot(collection(dbService, "NewFamcoVip"), 
             (snapshot) => {
-                const unsub = onSnapshot(doc(dbService, "NewFamcoMsg", `${famcoMsgId}`), (doc) => {
+                const unsub = onSnapshot(doc(dbService, "NewFamcoVip", `${famcoMsgId}`), (doc) => {
                     if(doc.data()){
                         setAllComments(doc.data().comments);
+                       
                     }
                 });
             },
@@ -68,9 +69,9 @@ const Comments = ({famcoMsgId, isOwner, userObj,FamcoMsgObj }) => {
                 });
 
 
-                const snapshotCommanderDate =  onSnapshot(collection(dbService, "NewFamcoMsg"), 
+                const snapshotCommanderDate =  onSnapshot(collection(dbService, "NewFamcoVip"), 
                 (snapshot) => {
-                    const unsub = onSnapshot(doc(dbService, "NewFamcoMsg", `${famcoMsgId}`), (doc) => {
+                    const unsub = onSnapshot(doc(dbService, "NewFamcoVip", `${famcoMsgId}`), (doc) => {
                         if(doc.data()){
                             setCurrentDate(doc.data().commentTime);
                             
@@ -87,21 +88,20 @@ const Comments = ({famcoMsgId, isOwner, userObj,FamcoMsgObj }) => {
         <div>
             
             <div className="theWholeComments">
-                <div class="notranslate" className="userAndComment">
+                <div  class= "notranslate" className="userAndComment">
                     {allComments.map((commentArry) => (
-                        <SingleComment
+                        <SingleCommentVip
                             famcoMsgId={famcoMsgId}
                             objKey={Object.keys(commentArry)} 
                             objValue={commentArry[Object.keys(commentArry)]}
                             userObj={userObj} 
-                            isOwner={isOwner}
                         />
                     ))}
                 </div>
 
-                <div class="notranslate" className="onlyDate">
+                <div class= "notranslate" className="onlyDate">
                     {currentDate&&currentDate.map((commentTimeArry) => (
-                        <CommentTime 
+                        <CommentTimeVip
                             commentTimeArry={Object.keys(commentTimeArry)}
                         /> 
                     ))}
@@ -130,4 +130,4 @@ const Comments = ({famcoMsgId, isOwner, userObj,FamcoMsgObj }) => {
     );
 }
 
-export default Comments;
+export default CommentsVip;

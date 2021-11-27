@@ -1,16 +1,16 @@
 import { dbService } from "fbase";
 import { deleteObject, ref } from "@firebase/storage";
 import { storageService } from "../fbase";
-import { doc, deleteDoc, updateDoc } from "firebase/firestore";
+import { doc, deleteDoc, updateDoc, collection, onSnapshot } from "firebase/firestore";
 import React, { useState,useEffect} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPencilAlt, faCommentDots } from "@fortawesome/free-solid-svg-icons";
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {faCommentDots as emptyComments } from '@fortawesome/free-regular-svg-icons'
-
 import heartIcon1 from "../assets/heart1.png";
 import heartIcon2 from "../assets/heart2.png";
 import cuteCrown from "../assets/cuteCrown.png";
+import CommentsVip from "components/CommentsVip";
 
 
 
@@ -21,6 +21,7 @@ const FamcoVip = ({FamcoVipObj, isOwner, userObj}) => {
     const [isLiked, setIsLiked] = useState(false);
     const [alreadyLiked, setAlreadyLiked] = useState(false);
     const [openComment, SetOpenComment] = useState(false);
+    const [numberOfComments, setNumberOfComments] = useState(0);
 
     let didIlike = FamcoVipObj.likedName.indexOf(userObj.uid);
     
@@ -55,6 +56,19 @@ const FamcoVip = ({FamcoVipObj, isOwner, userObj}) => {
         
     };
 
+    useEffect (() => {
+        const snapshotCommander =  onSnapshot(collection(dbService, "NewFamcoVip"), 
+            (snapshot) => {
+                const unsub = onSnapshot(doc(dbService, "NewFamcoVip", FamcoVipObj.id), (doc) => {
+                    if(doc.data()){
+                        setNumberOfComments(doc.data().commentsNumber);
+                    }
+                });
+            },
+            (error) => {
+                console.log("성공!");
+                });
+    },[]);
     
     
 
@@ -92,7 +106,7 @@ const FamcoVip = ({FamcoVipObj, isOwner, userObj}) => {
     
     const toggleComment = () => SetOpenComment((prev) => !prev);
     return(
-        <div className="famcoMsg famcoVip" >
+        <div className="famcoMsg " >
             {editing ? ( 
                 <>
                 <form onSubmit={onSubmit} className="container famcoMsgEdit"> 
@@ -129,20 +143,9 @@ const FamcoVip = ({FamcoVipObj, isOwner, userObj}) => {
                     
                     
                     <br/>
-                    <br/>
-                    <div className="FamcoMsgLikes">
-                        <img src={didIlike !== -1 ?heartIcon2:heartIcon1} 
-                            onClick={toggleLike}
-                        /> 
-                        <span class= "notranslate">{FamcoVipObj.likes}</span>
-                    </div>
+                    
+                    
 
-                    {openComment ?(    
-                        <FontAwesomeIcon onClick={toggleComment} icon={faCommentDots }  className="FamcoComments"/>
-                        ) : (
-                        <FontAwesomeIcon onClick={toggleComment} icon={emptyComments } className="FamcoComments" /> 
-                        )
-                    }    
                     
                     {isOwner ? 
                         (   <span class= "notranslate">
@@ -163,13 +166,48 @@ const FamcoVip = ({FamcoVipObj, isOwner, userObj}) => {
                                 <FontAwesomeIcon icon={faTrash} />
                             </span>
                         </div>
-                        )}
+                    )}
                         
                     {userObj.displayName == "ADMIN" && (
                             <span className="famcoMsg__actions superDelete" onClick={onDeleteClick}>
                                 <FontAwesomeIcon icon={faTrash} />
                             </span>  
-                        )}    
+                    )}
+
+                    <div className="FamcoMsgLikes">
+                        <img src={didIlike !== -1 ?heartIcon2:heartIcon1} 
+                            onClick={toggleLike}
+                        /> 
+                        <span class= "notranslate">{FamcoVipObj.likes}</span>
+                    </div>
+                    {openComment ?(
+                            <> 
+                            <FontAwesomeIcon onClick={toggleComment} icon={faCommentDots }  className="FamcoComments"/>
+                            <span class= "notranslate" className="numberOfComments">
+                                {numberOfComments}
+                            </span>
+
+                            <div style={{ marginTop: 30 }}>     
+                                
+                                    <CommentsVip 
+                                    key={NewFamcoMsg.id} 
+                                    famcoMsgId= {FamcoVipObj.id}
+                                    userObj={userObj}
+                                    FamcoVipObj={FamcoVipObj}
+                                    />
+                            </div>
+                        </>
+                            ) : (
+                            <>
+                                <FontAwesomeIcon onClick={toggleComment} icon={emptyComments} className="FamcoComments" />
+                                
+                                <span class= "notranslate" className="numberOfComments">
+                                {numberOfComments}
+                                </span> 
+                            </>
+                            )
+                        }
+
                 </>
             )}
         </div>
