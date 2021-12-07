@@ -2,14 +2,14 @@ import { dbService } from "fbase";
 import { deleteObject, ref } from "@firebase/storage";
 import { storageService } from "../fbase";
 import { doc, deleteDoc, updateDoc, collection, onSnapshot } from "firebase/firestore";
-import React, { useState,useEffect} from "react";
+import React, { useState,useEffect,useContext} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPencilAlt, faBullhorn, faCommentDots, } from "@fortawesome/free-solid-svg-icons";
 import {faCommentDots as emptyComments } from '@fortawesome/free-regular-svg-icons'
 import heartIcon1 from "../assets/heart1.png";
 import heartIcon2 from "../assets/heart2.png";
 import Comments from "routes/Comments";
-
+import { ModalContext } from "components/contexts/modalContext";
 
 const Famco = ({FamcoMsgObj, isOwner, userObj, isUserInfoExist}) => {
     const [editing, setEditing] = useState(false);
@@ -20,6 +20,7 @@ const Famco = ({FamcoMsgObj, isOwner, userObj, isUserInfoExist}) => {
     const [alreadyLiked, setAlreadyLiked] = useState(false);
     const [openComment, SetOpenComment] = useState(false);
     const [numberOfComments, setNumberOfComments] = useState(0);
+    const { handleModal } = useContext(ModalContext);
     
     let didIlike = FamcoMsgObj.likedName.indexOf(userObj.uid);
 
@@ -52,6 +53,7 @@ const Famco = ({FamcoMsgObj, isOwner, userObj, isUserInfoExist}) => {
         
     };
 
+    
     useEffect (() => {
         const snapshotCommander =  onSnapshot(collection(dbService, "NewFamcoMsg"), 
             (snapshot) => {
@@ -109,6 +111,8 @@ const Famco = ({FamcoMsgObj, isOwner, userObj, isUserInfoExist}) => {
     }
 
     const toggleComment = () => SetOpenComment((prev) => !prev);
+
+   
     
     return(
         <div class= "notranslate" className="famcoMsg">
@@ -139,8 +143,11 @@ const Famco = ({FamcoMsgObj, isOwner, userObj, isUserInfoExist}) => {
                     
                     <h4  className="famcoMsgText">
                         
-                    {FamcoMsgObj.attachmentUrl && <img src={FamcoMsgObj.attachmentUrl} className="famcoAttachedImg"/>}
-                        
+                    {FamcoMsgObj.attachmentUrl && <img src={FamcoMsgObj.attachmentUrl} className="famcoAttachedImg" 
+                    onClick={() => handleModal(<img src= {FamcoMsgObj.attachmentUrl} onClick={() => handleModal()} className="modalImg" />)}/>
+                    
+                    }
+                    
                     </h4>
                     <span class= "notranslate" className="famcoText">{FamcoMsgObj.text}</span>
                     <br/>
@@ -223,4 +230,4 @@ const Famco = ({FamcoMsgObj, isOwner, userObj, isUserInfoExist}) => {
 };
 
 
-export default Famco;
+export default React.memo(Famco);

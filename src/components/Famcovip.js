@@ -2,7 +2,7 @@ import { dbService } from "fbase";
 import { deleteObject, ref } from "@firebase/storage";
 import { storageService } from "../fbase";
 import { doc, deleteDoc, updateDoc, collection, onSnapshot } from "firebase/firestore";
-import React, { useState,useEffect} from "react";
+import React, { useState,useEffect,useContext} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPencilAlt, faCommentDots } from "@fortawesome/free-solid-svg-icons";
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -11,6 +11,7 @@ import heartIcon1 from "../assets/heart1.png";
 import heartIcon2 from "../assets/heart2.png";
 import cuteCrown from "../assets/cuteCrown.png";
 import CommentsVip from "components/CommentsVip";
+import { ModalContext } from "components/contexts/modalContext";
 
 
 
@@ -22,6 +23,7 @@ const FamcoVip = ({FamcoVipObj, isOwner, userObj}) => {
     const [alreadyLiked, setAlreadyLiked] = useState(false);
     const [openComment, SetOpenComment] = useState(false);
     const [numberOfComments, setNumberOfComments] = useState(0);
+    const { handleModal } = useContext(ModalContext);
 
     let didIlike = FamcoVipObj.likedName.indexOf(userObj.uid);
     
@@ -136,8 +138,11 @@ const FamcoVip = ({FamcoVipObj, isOwner, userObj}) => {
 
                     <h4 className="famcoMsgText">
                         
-                    {FamcoVipObj.attachmentUrl && <img src={FamcoVipObj.attachmentUrl} className="famcoAttachedImg"/>}
+                    {FamcoVipObj.attachmentUrl && <img src={FamcoVipObj.attachmentUrl} className="famcoAttachedImg"
+                    onClick={() => handleModal(<img src= {FamcoVipObj.attachmentUrl} onClick={() => handleModal()} className="modalImg" />)}
+                    />}
                         
+
                     </h4>
                     <span class= "notranslate" >{FamcoVipObj.text}</span>
                     
@@ -216,4 +221,4 @@ const FamcoVip = ({FamcoVipObj, isOwner, userObj}) => {
 };
 
 
-export default FamcoVip;
+export default React.memo(FamcoVip);

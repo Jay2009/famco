@@ -5,6 +5,7 @@
 @import "components/Loading.css";
 @import "components/Comments.css";
 @import "components/SingleComment.css";
+@import "components/Modal.css";
 
 /* screebs */
 @import "screens/Auth.css";

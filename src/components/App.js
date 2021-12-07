@@ -1,7 +1,7 @@
 import React, { useEffect, useState} from "react";
 import AppRouther from "components/Router";
 import {authService} from "fbase";
-
+import { ModalProvider } from "components/contexts/modalContext";
 
 
 
@@ -38,6 +38,7 @@ function App() {
 
   return (
     <>
+    <ModalProvider>
     {init ? <AppRouther
       refreshUser={refreshUser} 
       isLoggedIn={Boolean(userObj)} 
@@ -45,6 +46,7 @@ function App() {
       <span class="notranslate">
       <footer className="footer">&copy; {new Date().getFullYear()} Famco</footer>
       </span>
+      </ModalProvider>
     </>
   );
 }
